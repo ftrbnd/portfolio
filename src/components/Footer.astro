@@ -1,6 +1,14 @@
+---
+interface Props {
+  author: string;
+}
+
+const { author } = Astro.props
+---
+
 <footer class="footer footer-center p-4 bg-base-300 text-base-content">
   <aside class="grid grid-cols-2 w-full">
     <p class="text-xs justify-self-start">Copyright © 2024 - All right reserved.</p>
-    <p class="text-xs justify-self-end">Built and designed by Giovanni Salas.</p>
+    <p class="text-xs justify-self-end">Built and designed by {author}.</p>
   </aside>
 </footer>

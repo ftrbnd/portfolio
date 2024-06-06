@@ -1,10 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
+
+const title = "Giovanni Salas";
 ---
 
-<Layout title="Giovanni Salas">
+<Layout title={title}>
 	<main>
-		<Hero />
+		<Hero firstName={title.split(' ')[0]}/>
 	</main>
 </Layout>
