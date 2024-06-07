@@ -1,15 +1,12 @@
 ---
-import { favorites } from "../utils/projects";
+import { favorites } from "../../utils/projects";
 import Project from "./Project";
-import * as ProjectsHeader from './ProjectsHeader.md'
-
-const heading = ProjectsHeader.getHeadings()[0].text;
-
+import * as Header from './Header.md'
 ---
 
 <div class="p-8">
     <div class="text-2xl font-bold pb-4">
-        <ProjectsHeader.Content />
+        <Header.Content />
     </div>
 
     <div class="flex items-center justify-center flex-col lg:flex-row gap-3">
