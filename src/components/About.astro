@@ -1,0 +1,34 @@
+---
+import * as AboutHeader from './AboutHeader.md';
+---
+
+<div class="p-8 flex flex-col items-center">
+    <div class="text-2xl font-bold pb-4 self-start">
+        <AboutHeader.Content />
+    </div>
+
+    <div class="w-3/4 xl:w-1/2">
+        <div class="card lg:card-side bg-base-100 shadow-xl">
+            <figure class="overflow-hidden">
+                <img class="object-cover object-center w-full h-full" src="/src/assets/profile.png" alt="Album"/>
+            </figure>
+            <div class="card-body">
+                <p>I am always looking for ideas for my next project. I love music, so I tend to lean towards band-related apps.</p>
+                <div>
+                    <p>Here are some technologies I have been working with lately:</p>
+                    <ul class="list-disc list-inside">
+                        <li>TypeScript, JavaScript</li>
+                        <li>React, Next.js</li>
+                        <li>React Native, Expo</li>
+                        <li>Express, Fastify</li>
+                        <li>PostgreSQL</li>
+                        <li>Python</li>
+                        <li>Java</li>
+                    </ul>
+                </div>
+                <p>Outside of programming, I am usually tinkering with <a class="link" href="https://reddit.com/r/customkeyboards" target="_blank">keyboards</a>. I also enjoy film photography, and plan to run a marathon... <a class="link" href="https://www.strava.com/athletes/60272710" target="blank">eventually</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

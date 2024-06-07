@@ -3,7 +3,7 @@ import { createResource, type Component } from 'solid-js';
 import { Octokit } from 'octokit';
 
 const octokit = new Octokit({
-	auth: 'TOKEN',
+	auth: import.meta.env.GITHUB_TOKEN,
 });
 
 const fetchRepository = async (repository_name: string) => {
@@ -19,7 +19,7 @@ const Project: Component<FavoriteProject> = (props) => {
 	const [data] = createResource(props.repository_name, fetchRepository);
 
 	return (
-		<div class='card w-96 h-64 bg-base-100 shadow-xl image-full'>
+		<div class='card w-96 h-72 bg-base-100 shadow-xl image-full'>
 			<figure>
 				<img
 					src={props.screenshots[0]}
@@ -31,7 +31,7 @@ const Project: Component<FavoriteProject> = (props) => {
 				<p>{data()?.description}</p>
 				<div class='card-actions justify-end'>
 					<a
-						class='btn btn-primary'
+						class='btn btn-secondary'
 						href={data()?.homepage ?? data()?.html_url}
 						target='_blank'>
 						Visit

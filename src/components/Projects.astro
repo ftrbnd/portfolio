@@ -1,12 +1,18 @@
 ---
 import { favorites } from "../utils/projects";
 import Project from "./Project";
+import * as ProjectsHeader from './ProjectsHeader.md'
+
+const heading = ProjectsHeader.getHeadings()[0].text;
+
 ---
 
 <div class="p-8">
-    <h3 class="text-2xl font-bold pb-4">/ Projects</h3>
+    <div class="text-2xl font-bold pb-4">
+        <ProjectsHeader.Content />
+    </div>
 
     <div class="flex items-center justify-center flex-col lg:flex-row gap-3">
-        {favorites.map(project => <Project {...project} client:only="solid-js" />)}
+        {favorites.map(project => <Project {...project} />)}
     </div>
 </div>
