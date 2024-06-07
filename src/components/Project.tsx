@@ -1,9 +1,9 @@
-import type { FavoriteProject } from '../projects/favorites';
+import type { FavoriteProject } from '../utils/projects';
 import { createResource, type Component } from 'solid-js';
 import { Octokit } from 'octokit';
 
 const octokit = new Octokit({
-	auth: process.env.GITHUB_TOKEN,
+	auth: 'TOKEN',
 });
 
 const fetchRepository = async (repository_name: string) => {

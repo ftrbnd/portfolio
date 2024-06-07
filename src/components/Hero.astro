@@ -1,9 +1,7 @@
 ---
-interface Props {
-  firstName: string;
-}
+import { author } from "../utils/constants";
 
-const { firstName } = Astro.props
+const firstName = author.split(' ')[0];
 ---
 
 <div class="hero min-h-screen bg-base-200">

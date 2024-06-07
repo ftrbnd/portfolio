@@ -1,11 +1,6 @@
 ---
+import { author } from '../utils/constants';
 import NavbarMenu from './NavbarMenu.astro'
-
-interface Props {
-  title: string;
-}
-
-const { title } = Astro.props;
 ---
 
 <div class="navbar bg-base-100">
@@ -18,7 +13,7 @@ const { title } = Astro.props;
         <NavbarMenu />
       </ul>
     </div>
-    <a class="btn btn-ghost text-xl" href="">{title}</a>
+    <a class="btn btn-ghost text-xl" href="">{author}</a>
   </div>
   <div class="navbar-center hidden lg:flex">
     <ul class="menu menu-horizontal px-1">
