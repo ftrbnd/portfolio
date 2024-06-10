@@ -1,5 +1,6 @@
 ---
 import { author, email } from '../../utils/constants';
+import CurrentlyListening from './CurrentlyListening';
 import Menu from './Menu.astro'
 ---
 
@@ -13,13 +14,18 @@ import Menu from './Menu.astro'
         <Menu />
       </ul>
     </div>
-    <a class="btn btn-ghost text-xl" href="">{author}</a>
-  </div>
-  <div class="navbar-center hidden lg:flex">
+    <p class="btn btn-ghost text-xl hidden sm:flex">{author}</p>
+      <p class="btn btn-ghost text-xl sm:hidden">{author.substring(0, 3)}</p>
+     <div class="hidden lg:flex">
     <ul class="menu menu-horizontal px-1">
       <Menu />
+    </ul>
   </div>
-  <div class="navbar-end">
+  </div>
+ 
+  <div class="navbar-end gap-1">
+    <CurrentlyListening />
+    
     <a target="_blank" class="btn btn-ghost" href={`mailto:${email}`}>
         <svg class="w-6 h-6" fill="currentColor" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <title>Gmail</title>
