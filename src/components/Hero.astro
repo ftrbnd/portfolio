@@ -1,5 +1,4 @@
 ---
-import { Image } from "astro:assets";
 import { author, email } from "../utils/constants";
 
 const firstName = author.split(' ')[0];
@@ -8,7 +7,7 @@ const firstName = author.split(' ')[0];
 <div class="hero min-h-screen">
   <div class="hero-content text-center">
     <div class="max-w-md flex flex-col items-center">
-      <Image src="https://i.imgur.com/U65WS35.gif" alt='Monkey typing gif' height={48} width={48} class="w-12 h-12"/>
+      <img src="https://i.imgur.com/U65WS35.gif" alt="Monkey typing" class="w-12 h-12"/>
       <h1 class="text-6xl font-bold py-1">Hey there!</h1>
       <h2 class="text-3xl pt-3 pb-6">I'm {firstName}, a developer from Los Angeles, California.</h2>
       <p>
