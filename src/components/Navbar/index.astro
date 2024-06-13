@@ -2,9 +2,12 @@
 import { author, email } from '../../utils/constants';
 import CurrentlyListening from './CurrentlyListening';
 import Menu from './Menu.astro'
+
+const nickName = author.substring(0, 3);
+const lastNameLetter = author.split(' ')[1][0];
 ---
 
-<div class="navbar bg-base-100">
+<div class="navbar bg-base-100 sticky top-0 z-50 shadow-md">
   <div class="navbar-start">
     <div class="dropdown">
       <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
@@ -15,7 +18,7 @@ import Menu from './Menu.astro'
       </ul>
     </div>
     <p class="btn btn-ghost text-xl hidden sm:flex">{author}</p>
-      <p class="btn btn-ghost text-xl sm:hidden">{author.substring(0, 3)}</p>
+      <p class="btn btn-ghost text-xl sm:hidden">{} {nickName} {lastNameLetter}.</p>
      <div class="hidden lg:flex">
     <ul class="menu menu-horizontal px-1">
       <Menu />
