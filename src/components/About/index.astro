@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import * as Header from './Header.md';
+import profile from '../../assets/profile.png'
 ---
 
 <div class="p-8 flex flex-col items-center">
@@ -10,7 +12,7 @@ import * as Header from './Header.md';
     <div class="md:w-3/4 xl:w-1/2">
         <div class="card lg:card-side bg-base-100 shadow-xl">
             <figure class="overflow-hidden">
-                <img class="object-cover object-center w-full h-full" src="/src/assets/profile.png" alt='Profile' />
+                <Image class="object-cover object-center w-full h-full" src={profile} alt='Profile' />
             </figure>
             <div class="card-body">
                 <p>I am always looking for ideas for my next project. I love music, so I tend to lean towards band-related apps.</p>
