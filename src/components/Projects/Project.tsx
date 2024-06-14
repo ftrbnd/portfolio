@@ -19,11 +19,12 @@ const Project: Component<FavoriteProject> = (props) => {
 	const [data] = createResource(props.repository_name, fetchRepository);
 
 	return (
-		<div class='card flex-1 max-h-72 min-h-72 md:max-h-96 bg-base-100 shadow-xl image-full'>
+		<div class='card w-full flex-1 bg-base-100 shadow-xl image-full'>
 			<figure>
 				<img
 					src={props.screenshots[0]}
 					alt='Screenshot'
+					class='max-h-72 min-h-72'
 				/>
 			</figure>
 			<div class='card-body'>
