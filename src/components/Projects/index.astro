@@ -9,7 +9,7 @@ import * as Header from './Header.md'
         <Header.Content />
     </div>
 
-    <div class="flex items-center justify-center flex-col lg:flex-row gap-3">
+    <div class="flex flex-col xl:flex-row gap-3 justify-center items-stretch">
         {favorites.map(project => <Project {...project} />)}
     </div>
 </div>

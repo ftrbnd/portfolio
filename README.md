@@ -5,5 +5,5 @@
   </a>
 
   <h3 align="center">My Portfolio Website</h3>
-  <a href="https://giosalas.dev">Visit</a>
+  <a href="https://giosalad.dev">Visit</a>
 </div>
