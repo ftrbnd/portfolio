@@ -1,17 +1,16 @@
 ---
 interface Props {
     title: string;
-    description: string;
     technologies: string[];
     points: string[];
 }
 
-const { title, description, technologies, points } = Astro.props;
+const { title, technologies, points } = Astro.props;
 
 ---
 
 <div class="my-4">
-    <p class="font-bold">{title} - {description}</p>
+    <p class="font-bold">{title}</p>
     <p class="italic">{technologies.join(', ')}</p>
     <ul class="list-disc list-inside">
         {points.map(p => <li class="list-item">{p}</li>)}

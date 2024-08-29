@@ -2,12 +2,30 @@ export interface FavoriteProject {
 	repository_name: string;
 	project_name: string;
 	screenshots: string[];
-	description: string;
 	technologies: string[];
 	points: string[];
 }
 
 export const favorites: FavoriteProject[] = [
+	{
+		repository_name: 'apt-manager',
+		project_name: 'Apt Manager',
+		screenshots: [
+			'https://i.imgur.com/uV2jZht.png',
+			'https://i.imgur.com/SAFWuJy.png',
+		],
+		technologies: [
+			'TypeScript',
+			'Next.js',
+			'Lucia',
+			'shadcn/ui',
+			'Vercel Postgres',
+		],
+		points: [
+			'Developed a web app to streamline the management of apartment buildings, units, and rent receipts',
+			'Implemented authentication with Apple Sign-In using Lucia for a seamless user experience',
+		],
+	},
 	{
 		repository_name: 'on-tour',
 		project_name: 'On Tour',
@@ -15,8 +33,7 @@ export const favorites: FavoriteProject[] = [
 			'https://i.imgur.com/NyupHK9.png',
 			'https://i.imgur.com/0OizE26.png',
 		],
-		description:
-			'a React Native application to create playlists from live shows',
+
 		technologies: ['React Native', 'Expo', 'TypeScript', 'Fastify', 'NeonDb'],
 		points: [
 			"Used APIs from Spotify and setlist.fm to create a customized feed for users' favorite artists and their recent concerts",
@@ -31,8 +48,14 @@ export const favorites: FavoriteProject[] = [
 			'https://i.imgur.com/78JjsgF.png',
 			'https://i.imgur.com/d8fgocD.png',
 		],
-		description: 'a custom version of Heardle, the music version of Wordle',
-		technologies: ['React', 'Next.js', 'TypeScript', 'TailwindCSS', 'Supabase'],
+		technologies: [
+			'React',
+			'Next.js',
+			'TypeScript',
+			'TailwindCSS',
+			'Supabase',
+			'Express',
+		],
 		points: [
 			'Built a full-stack Heardle game for a dedicated community of 50 daily users',
 			'Developed a dedicated Express server for running a daily cron job and handling custom Heardle requests',
@@ -46,7 +69,6 @@ export const favorites: FavoriteProject[] = [
 			'https://i.imgur.com/8NdiTks.png',
 			'https://i.imgur.com/3UJdSi7.png',
 		],
-		description: 'a Discord bot application',
 		technologies: ['JavaScript', 'Node.js', 'MongoDB', 'Heroku'],
 		points: [
 			'Designed a Discord bot for a server of 3000+ members to handle moderation, event hosting, and interactive features',

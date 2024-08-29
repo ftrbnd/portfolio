@@ -9,7 +9,10 @@ import * as Header from './Header.md'
         <Header.Content />
     </div>
 
-    <div class="flex flex-col xl:flex-row gap-3 justify-center items-stretch">
+    <div class="flex flex-col xl:grid xl:grid-cols-3 gap-3 justify-center items-stretch">
         {favorites.map(project => <Project {...project} />)}
     </div>
+
+      <div class="divider"></div>
+    <p>See more on my <a class="link" href="https://github.com/ftrbnd" target="_blank">GitHub</a>!</p>
 </div>
