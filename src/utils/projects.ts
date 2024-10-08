@@ -8,6 +8,26 @@ export interface FavoriteProject {
 
 export const favorites: FavoriteProject[] = [
 	{
+		repository_name: 'film-sync',
+		project_name: 'Film Sync',
+		screenshots: [
+			'https://i.imgur.com/C5f2ZnU.png',
+			'https://i.imgur.com/w7U67Lo.png',
+		],
+		technologies: [
+			'Go',
+			'Google Cloud API',
+			'MongoDB',
+			'Amazon S3',
+			'Fly.io',
+			'Qstash',
+		],
+		points: [
+			'Streamlined file processing and storage across Google Drive and Amazon S3, enabling automatic updates to my portfolio',
+			'Automated daily email checking using Qstash scheduled requests to retrieve a .zip file containing film scans from my local photo studio',
+		],
+	},
+	{
 		repository_name: 'apt-manager',
 		project_name: 'Apt Manager',
 		screenshots: [
