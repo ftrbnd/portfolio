@@ -46,9 +46,6 @@ const CurrentlyListening: Component = () => {
 			<Match when={track.error}>
 				<Error />
 			</Match>
-			<Match when={track.loading}>
-				<span class='loading loading-dots loading-sm'></span>
-			</Match>
 			<Match when={track()}>
 				{(track) => (
 					<div class='card bg-base-100 image-full'>
@@ -78,6 +75,9 @@ const CurrentlyListening: Component = () => {
 						</div>
 					</div>
 				)}
+			</Match>
+			<Match when={track.loading}>
+				<span class='loading loading-dots loading-sm'></span>
 			</Match>
 		</Switch>
 	);
