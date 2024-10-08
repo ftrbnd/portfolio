@@ -1,18 +1,26 @@
 ---
-import { favorites } from "../../utils/projects";
-import Project from "./Project";
-import * as Header from './Header.md'
+import { favorites } from '../../utils/projects';
+import Project from './Project';
+import * as Header from './Header.md';
 ---
 
-<div class="py-8">
-    <div class="text-2xl font-bold pb-4">
-        <Header.Content />
-    </div>
+<div class='py-8'>
+	<div class='pb-4 text-2xl font-bold'>
+		<Header.Content />
+	</div>
 
-    <div class="flex flex-col xl:grid xl:grid-cols-3 gap-3 justify-center items-stretch">
-        {favorites.map(project => <Project {...project} />)}
-    </div>
+	<div
+		class='flex flex-col items-stretch justify-center gap-3 xl:grid xl:grid-cols-3'>
+		{favorites.map((project) => <Project {...project} />)}
+	</div>
 
-      <div class="divider"></div>
-    <p>See more on my <a class="link" href="https://github.com/ftrbnd" target="_blank">GitHub</a>!</p>
+	<div class='divider'></div>
+	<p>
+		See more on my <a
+			class='link'
+			href='https://github.com/ftrbnd'
+			target='_blank'
+			>GitHub</a
+		>!
+	</p>
 </div>
