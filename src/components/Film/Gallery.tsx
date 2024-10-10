@@ -8,24 +8,59 @@ const fetchImages = async () => {
 	return images;
 };
 
+const Skeleton: Component = () => (
+	<div class='skeleton h-48 md:h-80 w-full rounded-none'></div>
+);
+
+const ErrorAlert: Component = () => (
+	<div
+		role='alert'
+		class='alert alert-error md:col-span-2 xl:col-span-3'>
+		<svg
+			xmlns='http://www.w3.org/2000/svg'
+			class='h-6 w-6 shrink-0 stroke-current'
+			fill='none'
+			viewBox='0 0 24 24'>
+			<path
+				stroke-linecap='round'
+				stroke-linejoin='round'
+				stroke-width='2'
+				d='M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z'
+			/>
+		</svg>
+		<span>Oops! Failed to fetch my photos.</span>
+	</div>
+);
+
 const Gallery: Component = () => {
 	const [images] = createResource(fetchImages);
 
 	return (
-		<Switch fallback={<div>Something went wrong.</div>}>
-			<Match when={images.error}>Error!</Match>
-			<Match when={images()}>
-				<For each={images()}>
-					{(image, i) => (
-						<img
-							src={image}
-							alt='a film photo'
-						/>
-					)}
-				</For>
-			</Match>
-			<Match when={images.loading}>Loading...</Match>
-		</Switch>
+		<div class='gap-4 md:gap-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 max-w-screen-2xl'>
+			<Switch fallback={<ErrorAlert />}>
+				<Match when={images.error}>
+					<ErrorAlert />
+				</Match>
+				<Match when={images()}>
+					<For each={images()}>
+						{(image) => (
+							<img
+								src={image}
+								alt='a film photo'
+							/>
+						)}
+					</For>
+				</Match>
+				<Match when={images.loading}>
+					<Skeleton />
+					<Skeleton />
+					<Skeleton />
+					<Skeleton />
+					<Skeleton />
+					<Skeleton />
+				</Match>
+			</Switch>
+		</div>
 	);
 };
 
