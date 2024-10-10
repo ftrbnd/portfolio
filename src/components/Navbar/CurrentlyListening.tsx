@@ -51,7 +51,7 @@ const CurrentlyListening: Component = () => {
 					<div class='card bg-base-100 image-full'>
 						<figure>
 							<img
-								src={track().image[3]['#text']}
+								src={track().image[2]['#text']}
 								alt={track().album['#text']}
 								class='w-full max-h-12'
 							/>

@@ -1,0 +1,24 @@
+import { ListObjectsV2Command, S3Client } from '@aws-sdk/client-s3';
+
+const client = new S3Client({
+	credentials: {
+		accessKeyId: import.meta.env.AWS_ACCESS_KEY_ID,
+		secretAccessKey: import.meta.env.AWS_SECRET_ACCESS_KEY,
+	},
+	region: import.meta.env.AWS_REGION,
+});
+
+export const getImagesFromBucket = async (bucketName: string) => {
+	const listObjectsCommand = new ListObjectsV2Command({ Bucket: bucketName });
+	const { Contents } = await client.send(listObjectsCommand);
+	if (!Contents || Contents.length == 0) return [];
+
+	const region = import.meta.env.AWS_REGION;
+	const links = Contents.map((file) => {
+		if (file.Key?.endsWith('/')) return '';
+
+		return `https://${bucketName}.s3.${region}.amazonaws.com/${file.Key}`;
+	}).filter((link) => link !== '');
+
+	return links;
+};

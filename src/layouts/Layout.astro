@@ -6,19 +6,37 @@ import { ViewTransitions } from 'astro:transitions';
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html
+	lang='en'
+	class='scroll-smooth'>
 	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content={`${author}, a developer from Los Angeles`} />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
+		<meta charset='UTF-8' />
+		<meta
+			name='description'
+			content={`${author}, a developer from Los Angeles`}
+		/>
+		<meta
+			name='viewport'
+			content='width=device-width'
+		/>
+		<link
+			rel='icon'
+			type='image/svg+xml'
+			href='/favicon.ico'
+		/>
+		<meta
+			name='generator'
+			content={Astro.generator}
+		/>
 		<title>{author}</title>
-		<script src="https://kit.fontawesome.com/4afe62f7ed.js" crossorigin="anonymous"></script>
+		<script
+			src='https://kit.fontawesome.com/4afe62f7ed.js'
+			crossorigin='anonymous'
+		></script>
 		<ViewTransitions />
 	</head>
-	<body class="bg-base-200 flex flex-col items-center">
-		<Navbar/>
+	<body class='flex flex-col items-center bg-base-200'>
+		<Navbar />
 		<slot />
 		<Footer />
 	</body>

@@ -1,65 +1,100 @@
 ---
-import Project from "../components/Resume/Project.astro";
-import Layout from "../layouts/Layout.astro";
-import { favorites } from "../utils/projects";
+import Project from '../components/Resume/Project.astro';
+import Layout from '../layouts/Layout.astro';
+import { favorites } from '../utils/projects';
 ---
 
 <Layout>
-    <div class="min-h-screen p-8 md:p-16 flex flex-col gap-4">
-        <div class="flex flex-col gap-2">
-            <h1 class="text-3xl font-bold text-center">Giovanni Salas</h1>
-            <p class="text-center">https://github.com/ftrbnd | giosalas25@gmail.com</p>
-        </div>
+	<div class='flex flex-col min-h-screen gap-4 p-8 md:p-16'>
+		<div class='flex flex-col gap-2'>
+			<h1 class='text-3xl font-bold text-center'>Giovanni Salas</h1>
+			<p class='text-center'>
+				https://github.com/ftrbnd | giosalas25@gmail.com
+			</p>
+		</div>
 
-        <div>
-            <h3 class="text-2xl font-bold">Education</h3>
-            <div class="divider my-2"></div> 
-            <div class="flex justify-between font-bold">
-                <p>California State University, Long Beach</p>
-                <p>August 2017 - May 2022</p>
-            </div>
-            <div class="flex justify-between">
-                <p>B.S. in Computer Science</p>
-                <p class="italic">Long Beach, CA</p>
-            </div>
-            <ul class="list-disc list-inside">
-                <li>President's List: <span class="italic">Spring 2018</span></li>
-                <li>Dean's List: <span class="italic">Fall 2017, Spring 2022</span></li>
-            </ul>
-        </div>
+		<div>
+			<h3 class='text-2xl font-bold'>Education</h3>
+			<div class='my-2 divider'></div>
+			<div class='flex justify-between font-bold'>
+				<p>California State University, Long Beach</p>
+				<p>August 2017 - May 2022</p>
+			</div>
+			<div class='flex justify-between'>
+				<p>B.S. in Computer Science</p>
+				<p class='italic'>Long Beach, CA</p>
+			</div>
+			<ul class='list-disc list-inside'>
+				<li>President's List: <span class='italic'>Spring 2018</span></li>
+				<li>Dean's List: <span class='italic'>Fall 2017, Spring 2022</span></li>
+			</ul>
+		</div>
 
-        <div>
-            <h3 class="text-2xl font-bold">Projects</h3>
-            <div class="divider my-2"></div>
-            {favorites.map(project => <Project title={project.project_name} technologies={project.technologies} points={project.points}/>)}
-        </div>
+		<div>
+			<h3 class='text-2xl font-bold'>Projects</h3>
+			<div class='my-2 divider'></div>
+			{
+				favorites.map((project) => (
+					<Project
+						title={project.project_name}
+						technologies={project.technologies}
+						points={project.points}
+					/>
+				))
+			}
+		</div>
 
-        <div>
-            <h3 class="text-2xl font-bold">Languages / Technologies</h3>
-            <div class="divider my-2"></div>
-            <ul class="list-disc list-inside">
-                <li>TypeScript, JavaScript, HTML, CSS, Java, C++, Python</li>
-                <li>React.js, Next.js, React Native, NoSQL + SQL, Heroku, Express, GraphQL, Node.js, Git, Android SDK, Docker</li>
-            </ul>
-        </div>
+		<div>
+			<h3 class='text-2xl font-bold'>Languages / Technologies</h3>
+			<div class='my-2 divider'></div>
+			<ul class='list-disc list-inside'>
+				<li>TypeScript, JavaScript, HTML, CSS, Java, C++, Python</li>
+				<li>
+					React.js, Next.js, React Native, NoSQL + SQL, Heroku, Express,
+					GraphQL, Node.js, Git, Android SDK, Docker
+				</li>
+			</ul>
+		</div>
 
-        <div>
-            <h3 class="text-2xl font-bold">Relevant Coursework</h3>
-            <div class="divider my-2"></div>
+		<div>
+			<h3 class='text-2xl font-bold'>Relevant Coursework</h3>
+			<div class='my-2 divider'></div>
 
-            <div class="grid grid-cols-2 gridrows-4">
-                <p><span class="font-bold">CECS 491A&B -</span> Computer Science Senior Project I & II (Java)</p>
-                <p><span class="font-bold">CECS 343 -</span> Intro to Software Engineering (Java)</p>
+			<div class='grid grid-cols-2 gridrows-4'>
+				<p>
+					<span class='font-bold'>CECS 491A&B -</span> Computer Science Senior Project
+					I & II (Java)
+				</p>
+				<p>
+					<span class='font-bold'>CECS 343 -</span> Intro to Software Engineering
+					(Java)
+				</p>
 
-                <p><span class="font-bold">CECS 475 -</span> Software Dev with Frameworks (C# / .NET)</p>
-                <p><span class="font-bold">CECS 328 -</span> Data Structures and Algorithms (Java)</p>
+				<p>
+					<span class='font-bold'>CECS 475 -</span> Software Dev with Frameworks
+					(C# / .NET)
+				</p>
+				<p>
+					<span class='font-bold'>CECS 328 -</span> Data Structures and Algorithms
+					(Java)
+				</p>
 
-                <p><span class="font-bold">CECS 451 -</span> Artificial Intelligence (Python)</p>
-                <p><span class="font-bold">CECS 323 -</span> Database Fundamentals (SQL)</p>
+				<p>
+					<span class='font-bold'>CECS 451 -</span> Artificial Intelligence (Python)
+				</p>
+				<p>
+					<span class='font-bold'>CECS 323 -</span> Database Fundamentals (SQL)
+				</p>
 
-                <p><span class="font-bold">CECS 443 -</span> Software Project Management and Testing (Javascript / Nest.js / React.js / MongoDB)</p>
-                <p><span class="font-bold">CECS 228/229 -</span> Discrete Structures I & II (Java / C++ / Python)</p>
-            </div>
-        </div>
-    </div>
+				<p>
+					<span class='font-bold'>CECS 443 -</span> Software Project Management and
+					Testing (Javascript / Nest.js / React.js / MongoDB)
+				</p>
+				<p>
+					<span class='font-bold'>CECS 228/229 -</span> Discrete Structures I & II
+					(Java / C++ / Python)
+				</p>
+			</div>
+		</div>
+	</div>
 </Layout>
