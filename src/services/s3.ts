@@ -5,7 +5,7 @@ const client = new S3Client({
 		accessKeyId: import.meta.env.MY_AWS_ACCESS_KEY_ID,
 		secretAccessKey: import.meta.env.MY_AWS_SECRET_ACCESS_KEY,
 	},
-	region: import.meta.env.AWS_REGION,
+	region: import.meta.env.MY_AWS_REGION,
 });
 
 export const getImagesFromBucket = async (bucketName: string) => {
