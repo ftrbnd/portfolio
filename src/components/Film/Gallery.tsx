@@ -15,7 +15,7 @@ const fetchImages = async () => {
 };
 
 const Skeleton: Component = () => (
-	<div class='skeleton h-48 md:h-80 w-full rounded-none'></div>
+	<div class='skeleton h-48 md:h-80 w-full rounded-sm'></div>
 );
 
 const Skeletons: Component = () => (
@@ -32,7 +32,7 @@ const Skeletons: Component = () => (
 const ErrorAlert: Component = () => (
 	<div
 		role='alert'
-		class='alert alert-error md:col-span-2 xl:col-span-3'>
+		class='alert alert-error md:col-span-2 xl:col-span-3 rounded-sm'>
 		<svg
 			xmlns='http://www.w3.org/2000/svg'
 			class='h-6 w-6 shrink-0 stroke-current'
@@ -49,6 +49,25 @@ const ErrorAlert: Component = () => (
 	</div>
 );
 
+const EmptyAlert = () => (
+	<div
+		role='alert'
+		class='alert md:col-span-2 xl:col-span-3 rounded-sm'>
+		<svg
+			xmlns='http://www.w3.org/2000/svg'
+			fill='none'
+			viewBox='0 0 24 24'
+			class='stroke-info h-6 w-6 shrink-0'>
+			<path
+				stroke-linecap='round'
+				stroke-linejoin='round'
+				stroke-width='2'
+				d='M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'></path>
+		</svg>
+		<span>No photos yet...</span>
+	</div>
+);
+
 const Gallery: Component = () => {
 	const [images] = createResource(fetchImages);
 
@@ -56,7 +75,9 @@ const Gallery: Component = () => {
 		<div class='gap-4 md:gap-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 max-w-screen-2xl'>
 			<ErrorBoundary fallback={<ErrorAlert />}>
 				<Suspense fallback={<Skeletons />}>
-					<For each={images()}>
+					<For
+						each={images()}
+						fallback={<EmptyAlert />}>
 						{(image) => (
 							<img
 								src={image}
