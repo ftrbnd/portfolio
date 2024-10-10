@@ -1,4 +1,10 @@
-import { createResource, For, Match, Switch, type Component } from 'solid-js';
+import {
+	createResource,
+	ErrorBoundary,
+	For,
+	Suspense,
+	type Component,
+} from 'solid-js';
 import { getImagesFromBucket } from '../../services/s3';
 
 const fetchImages = async () => {
@@ -10,6 +16,17 @@ const fetchImages = async () => {
 
 const Skeleton: Component = () => (
 	<div class='skeleton h-48 md:h-80 w-full rounded-none'></div>
+);
+
+const Skeletons: Component = () => (
+	<>
+		<Skeleton />
+		<Skeleton />
+		<Skeleton />
+		<Skeleton />
+		<Skeleton />
+		<Skeleton />
+	</>
 );
 
 const ErrorAlert: Component = () => (
@@ -37,11 +54,8 @@ const Gallery: Component = () => {
 
 	return (
 		<div class='gap-4 md:gap-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 max-w-screen-2xl'>
-			<Switch fallback={<ErrorAlert />}>
-				<Match when={images.error}>
-					<ErrorAlert />
-				</Match>
-				<Match when={images()}>
+			<ErrorBoundary fallback={<ErrorAlert />}>
+				<Suspense fallback={<Skeletons />}>
 					<For each={images()}>
 						{(image) => (
 							<img
@@ -50,16 +64,8 @@ const Gallery: Component = () => {
 							/>
 						)}
 					</For>
-				</Match>
-				<Match when={images.loading}>
-					<Skeleton />
-					<Skeleton />
-					<Skeleton />
-					<Skeleton />
-					<Skeleton />
-					<Skeleton />
-				</Match>
-			</Switch>
+				</Suspense>
+			</ErrorBoundary>
 		</div>
 	);
 };
