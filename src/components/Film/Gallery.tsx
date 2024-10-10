@@ -10,7 +10,7 @@ import { getImagesFromBucket } from '../../services/s3';
 const fetchImages = async () => {
 	'use server';
 
-	const images = await getImagesFromBucket(import.meta.env.AWS_BUCKET_NAME);
+	const images = await getImagesFromBucket(import.meta.env.MY_AWS_BUCKET_NAME);
 	return images;
 };
 
