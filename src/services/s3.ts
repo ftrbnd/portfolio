@@ -17,7 +17,13 @@ export const getImagesFromBucket = async (bucketName: string) => {
 	const links = Contents.map((file) => {
 		if (file.Key?.endsWith('/')) return '';
 
-		return `https://${bucketName}.s3.${region}.amazonaws.com/${file.Key}`;
+		const link = `https://${bucketName}.s3.${region}.amazonaws.com/${file.Key?.replaceAll(
+			'+',
+			'%2B'
+		).replaceAll(' ', '+')}`;
+		console.log({ link });
+
+		return link;
 	}).filter((link) => link !== '');
 
 	return links;
