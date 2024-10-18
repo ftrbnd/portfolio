@@ -1,0 +1,30 @@
+---
+import { actions } from 'astro:actions';
+import FolderPreview from './FolderPreview.astro';
+import EmptyAlert from './EmptyAlert.astro';
+import ErrorAlert from './ErrorAlert.astro';
+
+const { data: folders, error } = await actions.getFolders({
+	bucketName: import.meta.env.MY_AWS_BUCKET_NAME,
+});
+
+const keys = Array.from(folders?.keys() ?? new Map<string, string[]>().keys());
+---
+
+<div
+	class='gap-4 md:gap-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 max-w-screen-2xl'>
+	{
+		error ? (
+			<ErrorAlert />
+		) : keys.length === 0 ? (
+			<EmptyAlert />
+		) : (
+			keys.map((k) => (
+				<FolderPreview
+					title={k}
+					urls={folders?.get(k) ?? []}
+				/>
+			))
+		)
+	}
+</div>
