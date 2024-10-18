@@ -7,7 +7,10 @@ interface Props {
 const { title, urls } = Astro.props;
 ---
 
-<div class='hover:opacity-50 hover:cursor-pointer flex flex-col gap-2'>
+<a
+	href={`/film/${title}`}
+	data-astro-prefetch
+	class='hover:opacity-50 hover:cursor-pointer flex flex-col gap-2'>
 	<h3 class='text-sm text-muted-foreground text-center'>{title}</h3>
 	<div class='gap-4 md:gap-4 grid grid-cols-2 grid-rows-2 max-w-screen-2xl'>
 		<img
@@ -27,4 +30,4 @@ const { title, urls } = Astro.props;
 			alt={`photo from ${title}`}
 		/>
 	</div>
-</div>
+</a>

@@ -8,8 +8,14 @@ const client = new S3Client({
 	region: import.meta.env.MY_AWS_REGION,
 });
 
-export const getImagesFromBucket = async (bucketName: string) => {
-	const listObjectsCommand = new ListObjectsV2Command({ Bucket: bucketName });
+export const getImagesFromBucket = async (
+	bucketName: string,
+	folderPrefix?: string
+) => {
+	const listObjectsCommand = new ListObjectsV2Command({
+		Bucket: bucketName,
+		Prefix: folderPrefix,
+	});
 	const { Contents } = await client.send(listObjectsCommand);
 
 	const region = import.meta.env.MY_AWS_REGION;
