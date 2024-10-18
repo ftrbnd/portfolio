@@ -11,20 +11,24 @@ const client = new S3Client({
 export const getImagesFromBucket = async (bucketName: string) => {
 	const listObjectsCommand = new ListObjectsV2Command({ Bucket: bucketName });
 	const { Contents } = await client.send(listObjectsCommand);
-	if (!Contents || Contents.length == 0) return [];
 
 	const region = import.meta.env.MY_AWS_REGION;
-	const links = Contents.map((file) => {
-		if (file.Key?.endsWith('/')) return '';
 
+	const folders = new Map<string, string[]>();
+	Contents?.forEach((file) => {
+		if (file.Key?.endsWith('/')) {
+			return folders.set(file.Key, []);
+		}
+
+		const folderPrefix = file.Key?.split('/')[0] ?? 'unknown';
 		const link = `https://${bucketName}.s3.${region}.amazonaws.com/${file.Key?.replaceAll(
 			'+',
 			'%2B'
 		).replaceAll(' ', '+')}`;
-		console.log({ link });
 
-		return link;
-	}).filter((link) => link !== '');
+		const prev = folders.get(folderPrefix) ?? [];
+		folders.set(folderPrefix, [...prev, link]);
+	});
 
-	return links;
+	return folders;
 };

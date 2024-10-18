@@ -6,12 +6,13 @@ import {
 	type Component,
 } from 'solid-js';
 import { getImagesFromBucket } from '../../services/s3';
+import FolderPreview from './FolderPreview';
 
 const fetchImages = async () => {
 	'use server';
 
-	const images = await getImagesFromBucket(import.meta.env.MY_AWS_BUCKET_NAME);
-	return images;
+	const folders = await getImagesFromBucket(import.meta.env.MY_AWS_BUCKET_NAME);
+	return folders;
 };
 
 const Skeleton: Component = () => (
@@ -69,19 +70,21 @@ const EmptyAlert = () => (
 );
 
 const Gallery: Component = () => {
-	const [images] = createResource(fetchImages);
+	const [folders] = createResource(fetchImages);
+	const keys = () =>
+		Array.from(folders()?.keys() ?? new Map<string, string[]>().keys());
 
 	return (
 		<div class='gap-4 md:gap-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 max-w-screen-2xl'>
 			<ErrorBoundary fallback={<ErrorAlert />}>
 				<Suspense fallback={<Skeletons />}>
 					<For
-						each={images()}
+						each={keys()}
 						fallback={<EmptyAlert />}>
-						{(image) => (
-							<img
-								src={image}
-								alt='a film photo'
+						{(folderKey) => (
+							<FolderPreview
+								title={folderKey}
+								urls={folders()?.get(folderKey) ?? []}
 							/>
 						)}
 					</For>
