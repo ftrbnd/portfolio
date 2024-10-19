@@ -18,21 +18,21 @@ const { data: images, error } = await actions.getOneFolder({
 			<header class='text-center mb-12'>
 				<h1 class='text-4xl font-serif mb-2 lowercase'>{folder}</h1>
 			</header>
-		</div>
-		<div
-			class='gap-4 md:gap-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 max-w-screen-2xl'>
-			{
-				error ? (
-					<ErrorAlert />
-				) : (
-					images?.map((url) => (
-						<img
-							src={url}
-							alt={`photo from ${folder}`}
-						/>
-					))
-				)
-			}
+			<div
+				class='gap-4 md:gap-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 max-w-screen-2xl'>
+				{
+					error ? (
+						<ErrorAlert />
+					) : (
+						images?.map((url) => (
+							<img
+								src={url}
+								alt={`photo from ${folder}`}
+							/>
+						))
+					)
+				}
+			</div>
 		</div>
 	</div>
 </Layout>
