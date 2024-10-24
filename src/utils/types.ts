@@ -28,7 +28,7 @@ interface RecentTrack {
 	date?: Date;
 }
 
-export interface Response {
+export interface LastFmResponse {
 	recenttracks: {
 		track: RecentTrack[];
 		'@attr': {

@@ -1,4 +1,4 @@
-import type { FavoriteProject } from '../../utils/projects';
+import type { FavoriteProject } from '../../utils/constants';
 import { createResource, type Component } from 'solid-js';
 import { Octokit } from 'octokit';
 
