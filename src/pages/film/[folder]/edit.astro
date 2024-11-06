@@ -5,7 +5,7 @@ import FilmLayout from '../../../layouts/FilmLayout.astro';
 import FilmHeaderLayout from '../../../layouts/FilmHeaderLayout.astro';
 import Auth from '../../../components/Auth';
 import FilmBodyLayout from '../../../layouts/FilmBodyLayout.astro';
-import EditView from '../../../components/Film/EditView';
+import EditList from '../../../components/Film/EditList';
 
 const { folder } = Astro.params;
 
@@ -37,7 +37,8 @@ const { data: images, error } = await actions.getOneFolder({
 				class='link link-primary'
 				>back</a
 			>
-			<EditView
+			<EditList
+				client:load
 				images={images ?? []}
 				folder={folder ?? ''}
 			/>
