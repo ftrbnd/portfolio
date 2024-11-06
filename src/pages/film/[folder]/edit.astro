@@ -5,6 +5,7 @@ import FilmLayout from '../../../layouts/FilmLayout.astro';
 import FilmHeaderLayout from '../../../layouts/FilmHeaderLayout.astro';
 import Auth from '../../../components/Auth';
 import FilmBodyLayout from '../../../layouts/FilmBodyLayout.astro';
+import EditView from '../../../components/Film/EditView';
 
 const { folder } = Astro.params;
 
@@ -36,7 +37,10 @@ const { data: images, error } = await actions.getOneFolder({
 				class='link link-primary'
 				>back</a
 			>
-			<p>TODO: make photos editable</p>
+			<EditView
+				images={images ?? []}
+				folder={folder ?? ''}
+			/>
 		</FilmBodyLayout>
 	</FilmLayout>
 </Layout>
