@@ -9,6 +9,7 @@ interface ImportMetaEnv {
 	readonly DATABASE_URL: string;
 	readonly GITHUB_CLIENT_ID: string;
 	readonly GITHUB_CLIENT_SECRET: string;
+	readonly ADMIN_GITHUB_USER_ID: string;
 }
 
 interface ImportMeta {
