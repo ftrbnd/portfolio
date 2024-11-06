@@ -8,7 +8,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
 	});
 
 	if (
-		context.url.pathname === '/film/dashboard' &&
+		/\/film\/.*\/edit/.test(context.url.pathname) &&
 		session?.user.id !== import.meta.env.ADMIN_GITHUB_USER_ID
 	) {
 		await client.revokeSessions();
