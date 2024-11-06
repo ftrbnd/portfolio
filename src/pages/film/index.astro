@@ -1,11 +1,13 @@
 ---
+import Auth from '../../components/Auth';
 import Gallery from '../../components/Film/Gallery.astro';
 import Layout from '../../layouts/Layout.astro';
 ---
 
 <Layout>
+	<Auth client:load />
 	<div
-		class='flex flex-col min-h-screen gap-4 p-8 md:p-16 w-full bg-zinc-100 text-zinc-800'>
+		class='flex flex-col min-h-screen gap-4 p-8 md:p-16 pt-0 w-full bg-zinc-100 text-zinc-800'>
 		<div class='container mx-auto px-4 py-8'>
 			<header class='text-center mb-12'>
 				<h1 class='text-4xl font-serif mb-2 lowercase'>shot on film</h1>

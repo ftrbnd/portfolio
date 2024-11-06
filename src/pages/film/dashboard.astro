@@ -1,0 +1,12 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { auth } from '../../utils/auth';
+
+const session = await auth.api.getSession({
+	headers: Astro.request.headers,
+});
+---
+
+<Layout>
+	<p>{session?.user?.name ?? 'You are not signed in.'}</p>
+</Layout>
