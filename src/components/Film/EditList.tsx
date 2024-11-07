@@ -34,16 +34,14 @@ const EditList: Component<Props> = (props) => {
 	};
 
 	return (
-		<ul class='flex flex-col items-center'>
+		<ul class='flex flex-col md:grid md:grid-cols-2 xl:grid-cols-3 gap-2 md:gap-4 items-center'>
 			<For each={props.images}>
 				{(imageSrc) => (
-					<li class='flex gap-1 w-full max-h-48'>
-						<EditImage
-							src={imageSrc}
-							folder={props.folder}
-							removeImage={() => removeImage(imageSrc)}
-						/>
-					</li>
+					<EditImage
+						src={imageSrc}
+						folder={props.folder}
+						removeImage={() => removeImage(imageSrc)}
+					/>
 				)}
 			</For>
 		</ul>
