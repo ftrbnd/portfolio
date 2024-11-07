@@ -1,8 +1,7 @@
-import { For, type Component } from 'solid-js';
+import { createSignal, For, Show, type Component } from 'solid-js';
 import EditImage from './EditImage';
 import { actions } from 'astro:actions';
 import { navigate } from 'astro:transitions/client';
-import { client } from '../../utils/auth/client';
 import toast from 'solid-toast';
 
 interface Props {
@@ -11,7 +10,8 @@ interface Props {
 }
 
 const EditList: Component<Props> = (props) => {
-	const session = client.useSession();
+	const [checkedImages, setCheckedImages] = createSignal<string[]>([]);
+	const amount = () => checkedImages().length;
 
 	const removeImage = async (imageUrl: string) => {
 		'use server';
@@ -20,12 +20,32 @@ const EditList: Component<Props> = (props) => {
 		await toast.promise(
 			actions.removeImage({
 				objectKey: `${props.folder}/${imageName}`,
-				userId: session().data.user.id,
 			}),
 			{
 				loading: `Removing ${imageName}...`,
 				success: () => <span>Removed {imageName}</span>,
 				error: <span>Failed to remove {imageName}</span>,
+			}
+		);
+
+		await navigate(`/film/${props.folder}/edit`);
+	};
+
+	const removeCheckedImages = async () => {
+		'use server';
+		const objectKeys = checkedImages().map((url) => {
+			const imageName = url.split('/').at(-1);
+			return `${props.folder}/${imageName}`;
+		});
+
+		await toast.promise(
+			actions.batchRemoveImages({
+				objectKeys,
+			}),
+			{
+				loading: `Removing ${amount()} photos...`,
+				success: () => <span>Removed {amount()} photos</span>,
+				error: <span>Failed to remove {amount()} photos</span>,
 			}
 		);
 
@@ -51,15 +71,40 @@ const EditList: Component<Props> = (props) => {
 		await navigate(`/film/${props.folder}/edit`);
 	};
 
+	const updateCheckedImages = (imageUrl: string) => {
+		setCheckedImages((prev) => {
+			if (prev.includes(imageUrl)) {
+				return prev.filter((url) => url !== imageUrl);
+			}
+			return prev.concat(imageUrl);
+		});
+	};
+
 	return (
 		<ul class='flex flex-col md:grid md:grid-cols-2 xl:grid-cols-3 gap-2 md:gap-4 items-center'>
+			<Show when={amount() > 0}>
+				<div class='flex gap-1 self-end md:place-self-end md:col-span-full'>
+					<button
+						onclick={() => setCheckedImages([])}
+						class='btn btn-info'>
+						Deselect all
+					</button>
+					<button
+						onclick={removeCheckedImages}
+						class='btn btn-error'>
+						Delete {amount()} {amount() > 1 ? 'images' : 'image'}
+					</button>
+				</div>
+			</Show>
 			<For each={props.images}>
-				{(imageSrc) => (
+				{(imageUrl) => (
 					<EditImage
-						src={imageSrc}
+						src={imageUrl}
 						folder={props.folder}
-						removeImage={() => removeImage(imageSrc)}
+						removeImage={() => removeImage(imageUrl)}
 						saveRotation={saveRotation}
+						isChecked={checkedImages().includes(imageUrl)}
+						onCheck={() => updateCheckedImages(imageUrl)}
 					/>
 				)}
 			</For>

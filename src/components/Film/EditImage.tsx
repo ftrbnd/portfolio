@@ -5,6 +5,8 @@ interface Props {
 	folder: string;
 	removeImage: () => void;
 	saveRotation: (url: string, deg: number) => void;
+	onCheck: () => void;
+	isChecked: boolean;
 }
 
 const EditImage: Component<Props> = (props) => {
@@ -25,14 +27,25 @@ const EditImage: Component<Props> = (props) => {
 	};
 
 	return (
-		<li class='flex justify-between items-center flex-col gap-2 h-full w-full bg-slate-200 rounded p-4 overflow-hidden'>
+		<li
+			class={`flex justify-between items-center flex-col gap-2 h-full w-full ${
+				props.isChecked ? 'bg-slate-300' : 'bg-slate-200'
+			} rounded p-4 overflow-hidden`}>
 			<img
 				src={props.src}
 				alt={`photo from ${props.folder}`}
 				class={`max-h-64 max-w-full place-self-center rounded transition-transform duration-500 object-contain`}
 				style={{ transform: `rotate(${rotation()}deg)` }}
 			/>
-			<p>{imageName}</p>
+			<div class='flex items-center gap-2'>
+				<input
+					type='checkbox'
+					checked={props.isChecked}
+					class='checkbox checkbox-primary'
+					onchange={props.onCheck}
+				/>
+				<p class={props.isChecked ? 'font-bold' : ''}>{imageName}</p>
+			</div>
 			<div class='flex justify-center gap-2 items-center w-full'>
 				<div class='flex-1 flex gap-1'>
 					<div
