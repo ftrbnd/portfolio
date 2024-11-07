@@ -13,7 +13,13 @@ const Auth: Component = () => {
 					class='tooltip tooltip-left'
 					data-tip='Sign in'>
 					<button
-						onClick={async () => await signIn()}
+						onClick={() =>
+							toast.promise(signIn(), {
+								loading: 'Signing in...',
+								success: () => <span>Successfully signed in</span>,
+								error: <span>Failed to sign in!</span>,
+							})
+						}
 						class='btn btn-ghost'>
 						<svg
 							class='size-4'
@@ -32,9 +38,12 @@ const Auth: Component = () => {
 					class='tooltip tooltip-left'
 					data-tip='Sign out'>
 					<button
-						onClick={async () => {
-							await client.signOut();
-							toast.success('Successfully signed out');
+						onClick={() => {
+							toast.promise(client.signOut(), {
+								loading: 'Signing out...',
+								success: () => <span>Successfully signed out</span>,
+								error: <span>Failed to sign out!</span>,
+							});
 							window.location.reload();
 						}}
 						class='btn btn-ghost'>
