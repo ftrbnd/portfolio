@@ -36,7 +36,7 @@ export const server = {
 			if (userId !== import.meta.env.ADMIN_GITHUB_USER_ID) {
 				throw new ActionError({
 					code: 'UNAUTHORIZED',
-					message: 'User is not an admin.',
+					message: 'You are not an admin of this page.',
 				});
 			}
 

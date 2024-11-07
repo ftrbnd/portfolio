@@ -1,5 +1,6 @@
 import { Show, type Component } from 'solid-js';
 import { client, signIn } from '../utils/auth/client';
+import toast from 'solid-toast';
 
 const Auth: Component = () => {
 	const session = client.useSession();
@@ -33,6 +34,7 @@ const Auth: Component = () => {
 					<button
 						onClick={async () => {
 							await client.signOut();
+							toast.success('Successfully signed out');
 							window.location.reload();
 						}}
 						class='btn btn-ghost'>

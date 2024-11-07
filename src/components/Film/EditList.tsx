@@ -3,6 +3,7 @@ import EditImage from './EditImage';
 import { actions } from 'astro:actions';
 import { navigate } from 'astro:transitions/client';
 import { client } from '../../utils/auth/client';
+import toast from 'solid-toast';
 
 interface Props {
 	images: string[];
@@ -16,16 +17,20 @@ const EditList: Component<Props> = (props) => {
 		'use server';
 
 		const imageName = imageSrc.split('/').at(-1);
-		const { error } = await actions.removeImage({
-			objectKey: `${props.folder}/${imageName}`,
-			userId: session().data.user.id,
-		});
 
-		if (!error) {
-			navigate(`/film/${props.folder}/edit`);
-		} else {
-			console.error(error);
-		}
+		toast.promise(
+			actions.removeImage({
+				objectKey: `${props.folder}/${imageName}`,
+				userId: session().data.user.id,
+			}),
+			{
+				loading: 'Removing...',
+				success: () => <span>Removed {imageName}</span>,
+				error: <span>Failed to remove {imageName}</span>,
+			}
+		);
+
+		navigate(`/film/${props.folder}/edit`);
 	};
 
 	return (
