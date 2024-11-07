@@ -59,6 +59,7 @@ const session = await auth.api.getSession({
 					) : (
 						images?.map((url) => (
 							<img
+								class='md:max-h-64 place-self-center'
 								src={url}
 								alt={`photo from ${folder}`}
 							/>

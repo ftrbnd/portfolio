@@ -25,11 +25,11 @@ const EditImage: Component<Props> = (props) => {
 	};
 
 	return (
-		<li class='flex items-center flex-col gap-2 w-full bg-slate-200 rounded p-4 overflow-hidden'>
+		<li class='flex justify-between items-center flex-col gap-2 h-full w-full bg-slate-200 rounded p-4 overflow-hidden'>
 			<img
 				src={props.src}
 				alt={`photo from ${props.folder}`}
-				class={`h-fit rounded transition-transform duration-500 object-contain max-w-full max-h-full`}
+				class={`max-h-64 max-w-full place-self-center rounded transition-transform duration-500 object-contain`}
 				style={{ transform: `rotate(${rotation()}deg)` }}
 			/>
 			<p>{imageName}</p>
@@ -49,7 +49,7 @@ const EditImage: Component<Props> = (props) => {
 							</svg>
 						</button>
 					</div>
-					<Show when={!isOriginalRotation()}>
+					<Show when={rotation() !== 0}>
 						<div
 							class='tooltip flex-1'
 							data-tip='Save'>
