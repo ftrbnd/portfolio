@@ -1,5 +1,6 @@
 import { ActionError, defineAction } from 'astro:actions';
 import {
+	batchDeleteImages,
 	deleteImage,
 	downloadImage,
 	getImagesFromBucket,
@@ -8,6 +9,7 @@ import {
 import { z } from 'astro:content';
 import { fetchCurrentlyPlaying } from '../services/last-fm';
 import sharp from 'sharp';
+import { auth } from '../utils/auth';
 
 export const server = {
 	getFolders: defineAction({
@@ -36,17 +38,17 @@ export const server = {
 	removeImage: defineAction({
 		input: z.object({
 			objectKey: z.string(),
-			userId: z.string(),
 		}),
-		handler: async ({ objectKey, userId }) => {
-			if (userId !== import.meta.env.ADMIN_GITHUB_USER_ID) {
-				throw new ActionError({
-					code: 'UNAUTHORIZED',
-					message: 'You are not an admin of this page.',
-				});
-			}
-
+		handler: async ({ objectKey }) => {
 			await deleteImage(objectKey);
+		},
+	}),
+	batchRemoveImages: defineAction({
+		input: z.object({
+			objectKeys: z.string().array(),
+		}),
+		handler: async ({ objectKeys }) => {
+			await batchDeleteImages(objectKeys);
 		},
 	}),
 	saveRotatedImage: defineAction({
