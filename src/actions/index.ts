@@ -1,7 +1,13 @@
 import { ActionError, defineAction } from 'astro:actions';
-import { deleteImage, getImagesFromBucket } from '../services/s3';
+import {
+	deleteImage,
+	downloadImage,
+	getImagesFromBucket,
+	replaceImage,
+} from '../services/s3';
 import { z } from 'astro:content';
 import { fetchCurrentlyPlaying } from '../services/last-fm';
+import sharp from 'sharp';
 
 export const server = {
 	getFolders: defineAction({
@@ -41,6 +47,24 @@ export const server = {
 			}
 
 			await deleteImage(objectKey);
+		},
+	}),
+	saveRotatedImage: defineAction({
+		input: z.object({
+			objectKey: z.string(),
+			degrees: z.number(),
+		}),
+		handler: async ({ objectKey, degrees }) => {
+			const bytes = await downloadImage(objectKey);
+			if (!bytes)
+				throw new ActionError({
+					code: 'INTERNAL_SERVER_ERROR',
+					message: `Failed to download ${objectKey}`,
+				});
+
+			const rotatedBuffer = await sharp(bytes).rotate(degrees).toBuffer();
+
+			await replaceImage(objectKey, rotatedBuffer);
 		},
 	}),
 };

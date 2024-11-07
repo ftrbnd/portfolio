@@ -13,24 +13,42 @@ interface Props {
 const EditList: Component<Props> = (props) => {
 	const session = client.useSession();
 
-	const removeImage = async (imageSrc: string) => {
+	const removeImage = async (imageUrl: string) => {
 		'use server';
+		const imageName = imageUrl.split('/').at(-1);
 
-		const imageName = imageSrc.split('/').at(-1);
-
-		toast.promise(
+		await toast.promise(
 			actions.removeImage({
 				objectKey: `${props.folder}/${imageName}`,
 				userId: session().data.user.id,
 			}),
 			{
-				loading: 'Removing...',
+				loading: `Removing ${imageName}...`,
 				success: () => <span>Removed {imageName}</span>,
 				error: <span>Failed to remove {imageName}</span>,
 			}
 		);
 
-		navigate(`/film/${props.folder}/edit`);
+		await navigate(`/film/${props.folder}/edit`);
+	};
+
+	const saveRotation = async (imageUrl: string, degrees: number) => {
+		'use server';
+		const imageName = imageUrl.split('/').at(-1);
+
+		await toast.promise(
+			actions.saveRotatedImage({
+				objectKey: `${props.folder}/${imageName}`,
+				degrees,
+			}),
+			{
+				loading: `Rotating ${imageName}...`,
+				success: () => <span>Successfully rotated {imageName}!</span>,
+				error: <span>Failed to rotate {imageName}</span>,
+			}
+		);
+
+		await navigate(`/film/${props.folder}/edit`);
 	};
 
 	return (
@@ -41,6 +59,7 @@ const EditList: Component<Props> = (props) => {
 						src={imageSrc}
 						folder={props.folder}
 						removeImage={() => removeImage(imageSrc)}
+						saveRotation={saveRotation}
 					/>
 				)}
 			</For>

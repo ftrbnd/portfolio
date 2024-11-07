@@ -4,6 +4,7 @@ interface Props {
 	src: string;
 	folder: string;
 	removeImage: () => void;
+	saveRotation: (url: string, deg: number) => void;
 }
 
 const EditImage: Component<Props> = (props) => {
@@ -23,19 +24,6 @@ const EditImage: Component<Props> = (props) => {
 		)?.close();
 	};
 
-	const handleConfirm = () => {
-		props.removeImage();
-		hideModal();
-	};
-
-	const handleRotate = () => {
-		setRotation((prev) => prev - 90);
-	};
-
-	const handleSaveRotation = () => {
-		console.log('TODO');
-	};
-
 	return (
 		<li class='flex items-center flex-col gap-2 w-full bg-slate-200 rounded p-4 overflow-hidden'>
 			<img
@@ -51,7 +39,7 @@ const EditImage: Component<Props> = (props) => {
 						class='tooltip flex-1'
 						data-tip='Rotate'>
 						<button
-							onClick={handleRotate}
+							onClick={() => setRotation((prev) => prev - 90)}
 							class='btn btn-secondary btn-sm sm:btn-md w-full'>
 							<svg
 								class='size-3 sm:size-4'
@@ -67,7 +55,7 @@ const EditImage: Component<Props> = (props) => {
 							data-tip='Save'>
 							<button
 								disabled={isOriginalRotation()}
-								onClick={handleSaveRotation}
+								onClick={() => props.saveRotation(props.src, rotation())}
 								class='btn btn-accent btn-sm sm:btn-md w-full'>
 								<svg
 									class='size-3 sm:size-4'
@@ -102,7 +90,10 @@ const EditImage: Component<Props> = (props) => {
 							</p>
 							<div class='modal-action'>
 								<button
-									onclick={handleConfirm}
+									onclick={() => {
+										props.removeImage();
+										hideModal();
+									}}
 									class='btn btn-danger'>
 									Confirm
 								</button>

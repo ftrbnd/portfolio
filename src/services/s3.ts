@@ -2,6 +2,8 @@ import {
 	ListObjectsV2Command,
 	S3Client,
 	DeleteObjectCommand,
+	GetObjectCommand,
+	PutObjectCommand,
 } from '@aws-sdk/client-s3';
 
 const client = new S3Client({
@@ -50,4 +52,27 @@ export const deleteImage = async (objectKey: string) => {
 	});
 
 	await client.send(deleteCommand);
+};
+
+export const downloadImage = async (objectKey: string) => {
+	const getCommand = new GetObjectCommand({
+		Bucket: import.meta.env.MY_AWS_BUCKET_NAME,
+		Key: objectKey,
+	});
+
+	const response = await client.send(getCommand);
+	const bytes = await response.Body?.transformToByteArray();
+
+	return bytes;
+};
+
+export const replaceImage = async (objectKey: string, buf: Buffer) => {
+	const putCommand = new PutObjectCommand({
+		Bucket: import.meta.env.MY_AWS_BUCKET_NAME,
+		Key: objectKey,
+		Body: buf,
+	});
+
+	const response = await client.send(putCommand);
+	return response;
 };
