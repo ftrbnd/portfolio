@@ -1,0 +1,47 @@
+---
+import { actions } from 'astro:actions';
+import Layout from '../../../layouts/Layout.astro';
+import FilmLayout from '../../../layouts/FilmLayout.astro';
+import FilmHeaderLayout from '../../../layouts/FilmHeaderLayout.astro';
+import Auth from '../../../components/Auth';
+import FilmBodyLayout from '../../../layouts/FilmBodyLayout.astro';
+import EditList from '../../../components/Film/EditList';
+
+const { folder } = Astro.params;
+
+const { data: images, error } = await actions.getOneFolder({
+	bucketName: import.meta.env.MY_AWS_BUCKET_NAME,
+	folderName: folder ?? '',
+});
+---
+
+<Layout>
+	<FilmHeaderLayout showHeader>
+		<Auth client:load />
+	</FilmHeaderLayout>
+	<FilmLayout>
+		<FilmBodyLayout>
+			<h1
+				slot='header-content'
+				class='text-4xl font-serif mb-2 lowercase'>
+				Edit collection
+			</h1>
+			<h2
+				slot='header-content'
+				class='text-2xl font-serif mb-2 lowercase'>
+				{folder}
+			</h2>
+			<a
+				slot='header-content'
+				href={`/film/${folder}`}
+				class='link link-primary'
+				>back</a
+			>
+			<EditList
+				client:load
+				images={images ?? []}
+				folder={folder ?? ''}
+			/>
+		</FilmBodyLayout>
+	</FilmLayout>
+</Layout>

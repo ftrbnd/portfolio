@@ -7,7 +7,9 @@
 		"start": "astro dev",
 		"build": "astro check && astro build",
 		"preview": "astro preview",
-		"astro": "astro"
+		"astro": "astro",
+		"db:generate": "npx @better-auth/cli generate --config src/utils/auth/index.ts",
+		"db:migrate": "npx @better-auth/cli migrate --config src/utils/auth/index.ts"
 	},
 	"dependencies": {
 		"@astrojs/check": "^0.9.4",
@@ -17,12 +19,18 @@
 		"@astrojs/ts-plugin": "^1.10.3",
 		"@aws-sdk/client-s3": "^3.675.0",
 		"astro": "^4.16.6",
+		"better-auth": "0.7.3-beta.9",
+		"dotenv": "^16.4.5",
 		"octokit": "^4.0.2",
+		"pg": "^8.13.1",
+		"sharp": "^0.33.5",
 		"solid-js": "^1.9.2",
+		"solid-toast": "^0.5.0",
 		"tailwindcss": "^3.4.14",
 		"typescript": "^5.6.3"
 	},
 	"devDependencies": {
+		"@types/pg": "^8.11.10",
 		"daisyui": "^4.12.13"
 	}
 }
