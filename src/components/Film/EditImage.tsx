@@ -3,6 +3,7 @@ import { type Component } from 'solid-js';
 interface Props {
 	src: string;
 	folder: string;
+	removeImage: () => void;
 }
 
 const EditImage: Component<Props> = (props) => {
@@ -14,8 +15,15 @@ const EditImage: Component<Props> = (props) => {
 		)?.showModal();
 	};
 
-	const removeImage = () => {
-		console.log('TODO');
+	const hideModal = () => {
+		(
+			document.getElementById(`delete_modal_${imageName}`) as HTMLDialogElement
+		)?.close();
+	};
+
+	const handleConfirm = () => {
+		props.removeImage();
+		hideModal();
 	};
 
 	return (
@@ -64,7 +72,7 @@ const EditImage: Component<Props> = (props) => {
 							</p>
 							<div class='modal-action'>
 								<button
-									onclick={removeImage}
+									onclick={handleConfirm}
 									class='btn btn-danger'>
 									Confirm
 								</button>

@@ -1,4 +1,8 @@
-import { ListObjectsV2Command, S3Client } from '@aws-sdk/client-s3';
+import {
+	ListObjectsV2Command,
+	S3Client,
+	DeleteObjectCommand,
+} from '@aws-sdk/client-s3';
 
 const client = new S3Client({
 	credentials: {
@@ -37,4 +41,13 @@ export const getImagesFromBucket = async (
 	});
 
 	return folders;
+};
+
+export const deleteImage = async (objectKey: string) => {
+	const deleteCommand = new DeleteObjectCommand({
+		Bucket: import.meta.env.MY_AWS_BUCKET_NAME,
+		Key: objectKey,
+	});
+
+	await client.send(deleteCommand);
 };
