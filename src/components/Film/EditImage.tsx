@@ -1,4 +1,4 @@
-import { type Component } from 'solid-js';
+import { createSignal, type Component } from 'solid-js';
 
 interface Props {
 	src: string;
@@ -8,6 +8,7 @@ interface Props {
 
 const EditImage: Component<Props> = (props) => {
 	const imageName = props.src.split('/').at(-1);
+	const [rotation, setRotation] = createSignal(0);
 
 	const revealModal = () => {
 		(
@@ -26,19 +27,26 @@ const EditImage: Component<Props> = (props) => {
 		hideModal();
 	};
 
+	const handleRotate = () => {
+		setRotation((prev) => prev - 90);
+	};
+
 	return (
-		<li class='flex items-center flex-col gap-2 w-full bg-slate-200 rounded p-4'>
+		<li class='flex items-center flex-col gap-2 w-full bg-slate-200 rounded p-4 overflow-hidden'>
 			<img
-				class='h-full rounded'
 				src={props.src}
 				alt={`photo from ${props.folder}`}
+				class={`h-fit rounded transition-transform duration-500 object-contain max-w-full max-h-full`}
+				style={{ transform: `rotate(${rotation()}deg)` }}
 			/>
 			<p>{imageName}</p>
 			<div class='flex justify-center gap-2 items-center w-full'>
 				<div
 					class='tooltip flex-1'
 					data-tip='Rotate'>
-					<button class='btn btn-secondary btn-sm sm:btn-md w-full'>
+					<button
+						onClick={handleRotate}
+						class='btn btn-secondary btn-sm sm:btn-md w-full'>
 						<svg
 							class='size-3 sm:size-4'
 							xmlns='http://www.w3.org/2000/svg'
