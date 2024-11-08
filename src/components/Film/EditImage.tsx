@@ -1,4 +1,5 @@
 import { createSignal, Show, type Component } from 'solid-js';
+import Image from './Image';
 
 interface Props {
 	src: string;
@@ -31,11 +32,10 @@ const EditImage: Component<Props> = (props) => {
 			class={`flex justify-between items-center flex-col gap-2 h-full w-full ${
 				props.isChecked ? 'bg-slate-300' : 'bg-slate-200'
 			} rounded p-4 overflow-hidden`}>
-			<img
+			<Image
 				src={props.src}
-				alt={`photo from ${props.folder}`}
-				class={`max-h-64 max-w-full place-self-center rounded transition-transform duration-500 object-contain`}
-				style={{ transform: `rotate(${rotation()}deg)` }}
+				rotation={rotation()}
+				rounded
 			/>
 			<div class='flex items-center gap-2'>
 				<input

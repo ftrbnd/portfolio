@@ -6,6 +6,7 @@ import FilmLayout from '../../../layouts/FilmLayout.astro';
 import FilmHeaderLayout from '../../../layouts/FilmHeaderLayout.astro';
 import { auth } from '../../../utils/auth';
 import FilmBodyLayout from '../../../layouts/FilmBodyLayout.astro';
+import Image from '../../../components/Film/Image';
 
 const { folder } = Astro.params;
 
@@ -58,10 +59,9 @@ const session = await auth.api.getSession({
 						<ErrorAlert />
 					) : (
 						images?.map((url) => (
-							<img
-								class='md:max-h-64 place-self-center'
+							<Image
 								src={url}
-								alt={`photo from ${folder}`}
+								client:load
 							/>
 						))
 					)
