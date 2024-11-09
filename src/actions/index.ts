@@ -9,7 +9,6 @@ import {
 import { z } from 'astro:content';
 import { fetchCurrentlyPlaying } from '../services/last-fm';
 import sharp from 'sharp';
-import { auth } from '../utils/auth';
 
 export const server = {
 	getFolders: defineAction({
@@ -27,7 +26,14 @@ export const server = {
 		}),
 		handler: async ({ bucketName, folderName }) => {
 			const folders = await getImagesFromBucket(bucketName, folderName);
-			return folders.get(folderName);
+			const folder = folders.get(folderName);
+			if (!folder)
+				throw new ActionError({
+					code: 'NOT_FOUND',
+					message: `Folder with name "${folderName}" does not exist`,
+				});
+
+			return folder;
 		},
 	}),
 	getCurrentlyPlaying: defineAction({
