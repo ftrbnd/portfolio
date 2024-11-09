@@ -60,6 +60,7 @@ const session = await auth.api.getSession({
 					) : (
 						images?.map((url) => (
 							<Image
+								transition:persist={url}
 								src={url}
 								client:load
 							/>
