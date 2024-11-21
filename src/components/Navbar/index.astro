@@ -1,6 +1,6 @@
 ---
 import { author, email } from '../../utils/constants';
-import CurrentlyListening from './CurrentlyListening.astro';
+import CurrentlyListening from './CurrentlyListening';
 import Menu from './Menu.astro';
 
 const nickName = author.substring(0, 3);
@@ -52,7 +52,7 @@ const lastNameLetter = author.split(' ')[1][0];
 	</div>
 
 	<div class='gap-1 navbar-end'>
-		<CurrentlyListening />
+		<CurrentlyListening client:load />
 
 		<a
 			target='_blank'
