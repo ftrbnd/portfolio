@@ -13,13 +13,7 @@ const Auth: Component = () => {
 					class='tooltip tooltip-left'
 					data-tip='Sign in'>
 					<button
-						onClick={() =>
-							toast.promise(signIn(), {
-								loading: 'Signing in...',
-								success: () => <span>Successfully signed in</span>,
-								error: <span>Failed to sign in!</span>,
-							})
-						}
+						onClick={signIn}
 						class='btn btn-ghost'>
 						<svg
 							class='size-4'

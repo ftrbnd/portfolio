@@ -6,9 +6,12 @@ import About from '../components/About/index.astro';
 ---
 
 <Layout>
-	<main class='w-5/6 bg-base-200 md:w-4/5 lg:2/3 2xl:w-1/2'>
+	<main
+		class='w-5/6 bg-base-200 md:max-w-[1536px] 2xl:grid 2xl:gap-x-16 2xl:grid-cols-3'>
 		<Hero />
-		<About />
-		<Projects />
+		<div class='flex flex-col 2xl:col-span-2 2xl:mt-8'>
+			<About />
+			<Projects />
+		</div>
 	</main>
 </Layout>
