@@ -4,11 +4,7 @@ import FolderPreview from './FolderPreview.astro';
 import EmptyAlert from './EmptyAlert.astro';
 import ErrorAlert from './ErrorAlert.astro';
 
-const { data: folders, error } = await actions.getFolders({
-	bucketName: import.meta.env.MY_AWS_BUCKET_NAME,
-});
-
-const keys = Array.from(folders?.keys() ?? new Map<string, string[]>().keys());
+const { data: scans, error } = await actions.getScans();
 ---
 
 <div
@@ -16,13 +12,13 @@ const keys = Array.from(folders?.keys() ?? new Map<string, string[]>().keys());
 	{
 		error ? (
 			<ErrorAlert message={error.message} />
-		) : keys.length === 0 ? (
+		) : scans.length === 0 ? (
 			<EmptyAlert />
 		) : (
-			keys.map((k) => (
+			scans.map((scan) => (
 				<FolderPreview
-					title={k}
-					urls={folders?.get(k) ?? []}
+					title={scan.folder_name}
+					keys={scan.image_keys}
 				/>
 			))
 		)

@@ -10,6 +10,8 @@ interface ImportMetaEnv {
 	readonly GITHUB_CLIENT_ID: string;
 	readonly GITHUB_CLIENT_SECRET: string;
 	readonly ADMIN_GITHUB_USER_ID: string;
+	readonly MY_AWS_CLOUDFRONT_DOMAIN: string;
+	readonly FILM_SYNC_URL: string;
 }
 
 interface ImportMeta {

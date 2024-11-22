@@ -1,11 +1,11 @@
-import { createSignal, For, Show, type Component } from 'solid-js';
+import { createSignal, For, onMount, Show, type Component } from 'solid-js';
 import EditImage from './EditImage';
 import { actions } from 'astro:actions';
 import { navigate } from 'astro:transitions/client';
 import toast from 'solid-toast';
 
 interface Props {
-	images: string[];
+	keys: string[];
 	folder: string;
 }
 
@@ -13,18 +13,20 @@ const EditList: Component<Props> = (props) => {
 	const [checkedImages, setCheckedImages] = createSignal<string[]>([]);
 	const amount = () => checkedImages().length;
 
-	const removeImage = async (imageUrl: string) => {
-		'use server';
-		const imageName = imageUrl.split('/').at(-1);
+	onMount(() => {
+		console.log(props.keys);
+	});
 
+	const removeImage = async (key: string) => {
+		'use server';
 		await toast.promise(
 			actions.removeImage({
-				objectKey: `${props.folder}/${imageName}`,
+				objectKey: `${props.folder}/${key}`,
 			}),
 			{
-				loading: `Removing ${imageName}...`,
-				success: () => <span>Removed {imageName}</span>,
-				error: <span>Failed to remove {imageName}</span>,
+				loading: `Removing ${key}...`,
+				success: () => <span>Removed {key}</span>,
+				error: <span>Failed to remove {key}</span>,
 			}
 		);
 
@@ -33,14 +35,10 @@ const EditList: Component<Props> = (props) => {
 
 	const removeCheckedImages = async () => {
 		'use server';
-		const objectKeys = checkedImages().map((url) => {
-			const imageName = url.split('/').at(-1);
-			return `${props.folder}/${imageName}`;
-		});
 
 		await toast.promise(
 			actions.batchRemoveImages({
-				objectKeys,
+				objectKeys: checkedImages(),
 			}),
 			{
 				loading: `Removing ${amount()} photos...`,
@@ -96,15 +94,17 @@ const EditList: Component<Props> = (props) => {
 					</button>
 				</div>
 			</Show>
-			<For each={props.images}>
-				{(imageUrl) => (
+			<For each={props.keys}>
+				{(key) => (
 					<EditImage
-						src={imageUrl}
+						src={`${import.meta.env.MY_AWS_CLOUDFRONT_DOMAIN}/${
+							props.folder
+						}/${key}`}
 						folder={props.folder}
-						removeImage={() => removeImage(imageUrl)}
+						removeImage={() => removeImage(key)}
 						saveRotation={saveRotation}
-						isChecked={checkedImages().includes(imageUrl)}
-						onCheck={() => updateCheckedImages(imageUrl)}
+						isChecked={checkedImages().includes(key)}
+						onCheck={() => updateCheckedImages(key)}
 					/>
 				)}
 			</For>

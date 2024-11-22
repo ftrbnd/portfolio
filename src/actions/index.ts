@@ -9,31 +9,20 @@ import {
 import { z } from 'astro:content';
 import { fetchCurrentlyPlaying } from '../services/last-fm';
 import sharp from 'sharp';
+import { fetchFilmScans, fetchOneFilmScan } from '../services/film-sync';
 
 export const server = {
-	getFolders: defineAction({
-		input: z.object({
-			bucketName: z.string(),
-		}),
-		handler: async ({ bucketName }) => {
-			return getImagesFromBucket(bucketName);
+	getScans: defineAction({
+		handler: async () => {
+			return fetchFilmScans();
 		},
 	}),
-	getOneFolder: defineAction({
+	getOneScan: defineAction({
 		input: z.object({
-			bucketName: z.string(),
 			folderName: z.string(),
 		}),
-		handler: async ({ bucketName, folderName }) => {
-			const folders = await getImagesFromBucket(bucketName, folderName);
-			const folder = folders.get(folderName);
-			if (!folder)
-				throw new ActionError({
-					code: 'NOT_FOUND',
-					message: `Folder with name "${folderName}" does not exist`,
-				});
-
-			return folder;
+		handler: async ({ folderName }) => {
+			return fetchOneFilmScan(folderName);
 		},
 	}),
 	getCurrentlyPlaying: defineAction({
