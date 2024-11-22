@@ -20,7 +20,10 @@ const firstFour = keys.slice(0, 4);
 			firstFour.map((key) => (
 				<Image
 					transition:persist={key}
-					src={`${import.meta.env.MY_AWS_CLOUDFRONT_DOMAIN}/${title}/${key}`}
+					src={`${import.meta.env.MY_AWS_CLOUDFRONT_DOMAIN}/${title}/${key}`.replaceAll(
+						'+',
+						'%2B'
+					)}
 					isThumbnail
 					client:load
 				/>
