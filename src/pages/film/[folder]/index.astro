@@ -10,8 +10,7 @@ import Image from '../../../components/Film/Image';
 
 const { folder } = Astro.params;
 
-const { data: images, error } = await actions.getOneFolder({
-	bucketName: import.meta.env.MY_AWS_BUCKET_NAME,
+const { data: scan, error } = await actions.getOneScan({
 	folderName: folder ?? '',
 });
 
@@ -58,10 +57,10 @@ const session = await auth.api.getSession({
 					error ? (
 						<ErrorAlert message={error.message} />
 					) : (
-						images?.map((url) => (
+						scan.image_keys?.map((key) => (
 							<Image
-								transition:persist={url}
-								src={url}
+								transition:persist={key}
+								src={`${import.meta.env.MY_AWS_CLOUDFRONT_DOMAIN}/${scan.folder_name}/${key}`}
 								client:load
 							/>
 						))

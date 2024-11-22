@@ -10,8 +10,7 @@ import ErrorAlert from '../../../components/Film/ErrorAlert.astro';
 
 const { folder } = Astro.params;
 
-const { data: images, error } = await actions.getOneFolder({
-	bucketName: import.meta.env.MY_AWS_BUCKET_NAME,
+const { data: scan, error } = await actions.getOneScan({
 	folderName: folder ?? '',
 });
 ---
@@ -44,8 +43,9 @@ const { data: images, error } = await actions.getOneFolder({
 				) : (
 					<EditList
 						client:load
-						images={images ?? []}
+						keys={scan.image_keys}
 						folder={folder ?? ''}
+						cdnUrl={import.meta.env.MY_AWS_CLOUDFRONT_DOMAIN}
 					/>
 				)
 			}
