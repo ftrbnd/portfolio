@@ -1,3 +1,4 @@
+import { ActionError } from 'astro:actions';
 import { z } from 'astro:schema';
 
 const schema = z.object({
@@ -12,10 +13,16 @@ export const fetchFilmScans = async () => {
 	const res = await fetch(`${import.meta.env.FILM_SYNC_URL}/api/scans`);
 	if (!res.ok) throw new Error('Failed to fetch film scans');
 
-	const data = await res.json();
-	const scans = schema.array().parse(data);
+	const json = await res.json();
+	const { data, error } = schema.array().safeParse(json);
 
-	return scans;
+	if (error)
+		throw new ActionError({
+			message: 'Failed to parse api response',
+			code: 'INTERNAL_SERVER_ERROR',
+		});
+
+	return data;
 };
 
 export const fetchOneFilmScan = async (folder: string) => {
