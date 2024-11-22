@@ -7,15 +7,12 @@ import toast from 'solid-toast';
 interface Props {
 	keys: string[];
 	folder: string;
+	cdnUrl: string;
 }
 
 const EditList: Component<Props> = (props) => {
 	const [checkedImages, setCheckedImages] = createSignal<string[]>([]);
 	const amount = () => checkedImages().length;
-
-	onMount(() => {
-		console.log(props.keys);
-	});
 
 	const removeImage = async (key: string) => {
 		'use server';
@@ -97,9 +94,7 @@ const EditList: Component<Props> = (props) => {
 			<For each={props.keys}>
 				{(key) => (
 					<EditImage
-						src={`${import.meta.env.MY_AWS_CLOUDFRONT_DOMAIN}/${
-							props.folder
-						}/${key}`}
+						src={`${props.cdnUrl}/${props.folder}/${key}`}
 						folder={props.folder}
 						removeImage={() => removeImage(key)}
 						saveRotation={saveRotation}

@@ -43,8 +43,9 @@ const { data: scan, error } = await actions.getOneScan({
 				) : (
 					<EditList
 						client:load
-						keys={scan.image_keys ?? []}
+						keys={scan.image_keys}
 						folder={folder ?? ''}
+						cdnUrl={import.meta.env.MY_AWS_CLOUDFRONT_DOMAIN}
 					/>
 				)
 			}

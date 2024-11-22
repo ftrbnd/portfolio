@@ -3,7 +3,6 @@ import {
 	batchDeleteImages,
 	deleteImage,
 	downloadImage,
-	getImagesFromBucket,
 	replaceImage,
 } from '../services/s3';
 import { z } from 'astro:content';
