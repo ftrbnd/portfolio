@@ -60,7 +60,10 @@ const session = await auth.api.getSession({
 						scan.image_keys?.map((key) => (
 							<Image
 								transition:persist={key}
-								src={`${import.meta.env.MY_AWS_CLOUDFRONT_DOMAIN}/${scan.folder_name}/${key}`}
+								src={`${import.meta.env.MY_AWS_CLOUDFRONT_DOMAIN}/${scan.folder_name}/${key}`.replaceAll(
+									'+',
+									'%2B'
+								)}
 								client:load
 							/>
 						))

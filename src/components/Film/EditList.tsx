@@ -94,7 +94,10 @@ const EditList: Component<Props> = (props) => {
 			<For each={props.keys}>
 				{(key) => (
 					<EditImage
-						src={`${props.cdnUrl}/${props.folder}/${key}`}
+						src={`${props.cdnUrl}/${props.folder}/${key}`.replaceAll(
+							'+',
+							'%2B'
+						)}
 						folder={props.folder}
 						removeImage={() => removeImage(key)}
 						saveRotation={saveRotation}
