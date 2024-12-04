@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import { CldImage } from 'astro-cloudinary';
+
+const photos = await getCollection('photos');
+console.log(photos.map((photo) => photo.data.public_id));
+---
+
+<Layout>
+	<ul>
+		{
+			photos.map((photo) => {
+				return (
+					<li>
+						<CldImage
+							src={photo.data.public_id}
+							width={photo.data.width}
+							height={photo.data.height}
+							alt={photo.data.context?.custom.caption || ''}
+						/>
+					</li>
+				);
+			})
+		}
+	</ul>
+</Layout>
