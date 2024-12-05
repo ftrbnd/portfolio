@@ -1,5 +1,6 @@
-import { defineCollection } from 'astro:content';
+import { defineCollection, type CollectionEntry } from 'astro:content';
 import { cldAssetsLoader } from 'astro-cloudinary/loaders';
+import 'astro:content';
 
 export const collections = {
 	photos: defineCollection({
@@ -7,4 +8,8 @@ export const collections = {
 	}),
 };
 
-// TODO: migrate images from actions to content layer
+export type PhotoCollectionEntry = CollectionEntry<'photos'> & {
+	data: {
+		asset_folder: string;
+	};
+};

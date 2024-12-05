@@ -1,11 +1,11 @@
-import { createSignal, For, onMount, Show, type Component } from 'solid-js';
+import { createSignal, For, Show, type Component } from 'solid-js';
 import EditImage from './EditImage';
 import { actions } from 'astro:actions';
 import { navigate } from 'astro:transitions/client';
 import toast from 'solid-toast';
 
 interface Props {
-	keys: string[];
+	urls: string[];
 	folder: string;
 	cdnUrl: string;
 }
@@ -91,18 +91,15 @@ const EditList: Component<Props> = (props) => {
 					</button>
 				</div>
 			</Show>
-			<For each={props.keys}>
-				{(key) => (
+			<For each={props.urls}>
+				{(url) => (
 					<EditImage
-						src={`${props.cdnUrl}/${props.folder}/${key}`.replaceAll(
-							'+',
-							'%2B'
-						)}
+						src={url}
 						folder={props.folder}
-						removeImage={() => removeImage(key)}
+						removeImage={() => removeImage(url)}
 						saveRotation={saveRotation}
-						isChecked={checkedImages().includes(key)}
-						onCheck={() => updateCheckedImages(key)}
+						isChecked={checkedImages().includes(url)}
+						onCheck={() => updateCheckedImages(url)}
 					/>
 				)}
 			</For>

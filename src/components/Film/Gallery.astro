@@ -1,24 +1,25 @@
 ---
-import { actions } from 'astro:actions';
-import FolderPreview from './FolderPreview.astro';
+import type { PhotoCollectionEntry } from '../../content.config';
 import EmptyAlert from './EmptyAlert.astro';
-import ErrorAlert from './ErrorAlert.astro';
+import { getCollection } from 'astro:content';
+import FolderPreview from './FolderPreview.astro';
 
-const { data: scans, error } = await actions.getScans();
+const photos = (await getCollection('photos')) as PhotoCollectionEntry[];
+const folders = [...new Set(photos.map((photo) => photo.data.asset_folder))];
 ---
 
 <div
 	class='gap-4 md:gap-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 max-w-screen-2xl'>
 	{
-		error ? (
-			<ErrorAlert message={error.message} />
-		) : scans.length === 0 ? (
+		folders.length === 0 ? (
 			<EmptyAlert />
 		) : (
-			scans.map((scan) => (
+			folders.map((folder) => (
 				<FolderPreview
-					title={scan.folder_name}
-					keys={scan.image_keys}
+					title={folder}
+					thumbnails={photos
+						.filter((photo) => photo.data.asset_folder === folder)
+						.slice(0, 4)}
 				/>
 			))
 		)

@@ -1,18 +1,19 @@
 ---
-import { actions } from 'astro:actions';
 import Layout from '../../../layouts/Layout.astro';
 import FilmLayout from '../../../layouts/FilmLayout.astro';
 import FilmHeaderLayout from '../../../layouts/FilmHeaderLayout.astro';
 import Auth from '../../../components/Auth';
 import FilmBodyLayout from '../../../layouts/FilmBodyLayout.astro';
 import EditList from '../../../components/Film/EditList';
-import ErrorAlert from '../../../components/Film/ErrorAlert.astro';
+import { getCollection } from 'astro:content';
+import type { PhotoCollectionEntry } from '../../../content.config';
 
 const { folder } = Astro.params;
 
-const { data: scan, error } = await actions.getOneScan({
-	folderName: folder ?? '',
-});
+const photos = await getCollection(
+	'photos',
+	(photo) => (photo as PhotoCollectionEntry).data.asset_folder === folder
+);
 ---
 
 <Layout>
@@ -37,18 +38,12 @@ const { data: scan, error } = await actions.getOneScan({
 				class='link link-primary'
 				>back</a
 			>
-			{
-				error ? (
-					<ErrorAlert message={error.message} />
-				) : (
-					<EditList
-						client:load
-						keys={scan.image_keys}
-						folder={folder ?? ''}
-						cdnUrl={import.meta.env.MY_AWS_CLOUDFRONT_DOMAIN}
-					/>
-				)
-			}
+			<EditList
+				client:load
+				urls={photos.map((photo) => photo.data.secure_url)}
+				folder={folder ?? ''}
+				cdnUrl={import.meta.env.MY_AWS_CLOUDFRONT_DOMAIN}
+			/>
 		</FilmBodyLayout>
 	</FilmLayout>
 </Layout>

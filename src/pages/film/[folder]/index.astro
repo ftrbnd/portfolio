@@ -1,18 +1,19 @@
 ---
-import { actions } from 'astro:actions';
 import Layout from '../../../layouts/Layout.astro';
-import ErrorAlert from '../../../components/Film/ErrorAlert.astro';
 import FilmLayout from '../../../layouts/FilmLayout.astro';
 import FilmHeaderLayout from '../../../layouts/FilmHeaderLayout.astro';
 import { auth } from '../../../utils/auth';
 import FilmBodyLayout from '../../../layouts/FilmBodyLayout.astro';
-import Image from '../../../components/Film/Image';
+import { getCollection } from 'astro:content';
+import type { PhotoCollectionEntry } from '../../../content.config';
+import { CldImage } from 'astro-cloudinary';
 
 const { folder } = Astro.params;
 
-const { data: scan, error } = await actions.getOneScan({
-	folderName: folder ?? '',
-});
+const photos = await getCollection(
+	'photos',
+	(photo) => (photo as PhotoCollectionEntry).data.asset_folder === folder
+);
 
 const session = await auth.api.getSession({
 	headers: Astro.request.headers,
@@ -54,20 +55,14 @@ const session = await auth.api.getSession({
 			<div
 				class='gap-4 md:gap-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 max-w-screen-2xl'>
 				{
-					error ? (
-						<ErrorAlert message={error.message} />
-					) : (
-						scan.image_keys?.map((key) => (
-							<Image
-								transition:persist={key}
-								src={`${import.meta.env.MY_AWS_CLOUDFRONT_DOMAIN}/${scan.folder_name}/${key}`.replaceAll(
-									'+',
-									'%2B'
-								)}
-								client:load
-							/>
-						))
-					)
+					photos.map((photo) => (
+						<CldImage
+							transition:persist={photo.data.public_id}
+							src={photo.data.public_id}
+							height={photo.data.height}
+							width={photo.data.width}
+						/>
+					))
 				}
 			</div>
 		</FilmBodyLayout>

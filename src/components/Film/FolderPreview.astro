@@ -1,31 +1,27 @@
 ---
-import Image from './Image';
+import { CldImage } from 'astro-cloudinary';
+import type { PhotoCollectionEntry } from '../../content.config';
 
 interface Props {
 	title: string;
-	keys: string[];
+	thumbnails: PhotoCollectionEntry[];
 }
 
-const { title, keys } = Astro.props;
-const firstFour = keys.slice(0, 4);
+const { title, thumbnails } = Astro.props;
 ---
 
 <a
 	href={`/film/${title}`}
-	data-astro-prefetch
 	class='hover:opacity-50 hover:cursor-pointer flex flex-col gap-2'>
 	<h3 class='text-sm text-muted-foreground text-center'>{title}</h3>
 	<div class='gap-2 md:gap-4 grid grid-cols-2 grid-rows-2 max-w-screen-2xl'>
 		{
-			firstFour.map((key) => (
-				<Image
-					transition:persist={key}
-					src={`${import.meta.env.MY_AWS_CLOUDFRONT_DOMAIN}/${title}/${key}`.replaceAll(
-						'+',
-						'%2B'
-					)}
-					isThumbnail
-					client:load
+			thumbnails.map((photo) => (
+				<CldImage
+					transition:persist={photo.data.public_id}
+					src={photo.data.public_id}
+					height={photo.data.height}
+					width={photo.data.width}
 				/>
 			))
 		}
