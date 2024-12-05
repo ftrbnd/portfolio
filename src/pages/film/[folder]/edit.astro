@@ -10,10 +10,10 @@ import type { PhotoCollectionEntry } from '../../../content.config';
 
 const { folder } = Astro.params;
 
-const photos = await getCollection(
+const photos = (await getCollection(
 	'photos',
 	(photo) => (photo as PhotoCollectionEntry).data.asset_folder === folder
-);
+)) as PhotoCollectionEntry[];
 ---
 
 <Layout>
@@ -38,11 +38,11 @@ const photos = await getCollection(
 				class='link link-primary'
 				>back</a
 			>
+
 			<EditList
 				client:load
-				urls={photos.map((photo) => photo.data.secure_url)}
+				photos={photos}
 				folder={folder ?? ''}
-				cdnUrl={import.meta.env.MY_AWS_CLOUDFRONT_DOMAIN}
 			/>
 		</FilmBodyLayout>
 	</FilmLayout>

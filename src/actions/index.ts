@@ -1,29 +1,16 @@
-import { ActionError, defineAction } from 'astro:actions';
-import {
-	batchDeleteImages,
-	deleteImage,
-	downloadImage,
-	replaceImage,
-} from '../services/s3';
+import { defineAction } from 'astro:actions';
 import { z } from 'astro:content';
 import { fetchCurrentlyPlaying } from '../services/last-fm';
-import sharp from 'sharp';
-import { fetchFilmScans, fetchOneFilmScan } from '../services/film-sync';
+import { v2 as cloudinary } from 'cloudinary';
+import { getSecret } from 'astro:env/server';
+
+cloudinary.config({
+	cloud_name: getSecret('PUBLIC_CLOUDINARY_CLOUD_NAME'),
+	api_key: getSecret('PUBLIC_CLOUDINARY_API_KEY'),
+	api_secret: getSecret('CLOUDINARY_API_SECRET'),
+});
 
 export const server = {
-	getScans: defineAction({
-		handler: async () => {
-			return fetchFilmScans();
-		},
-	}),
-	getOneScan: defineAction({
-		input: z.object({
-			folderName: z.string(),
-		}),
-		handler: async ({ folderName }) => {
-			return fetchOneFilmScan(folderName);
-		},
-	}),
 	getCurrentlyPlaying: defineAction({
 		handler: async () => {
 			return fetchCurrentlyPlaying();
@@ -31,36 +18,31 @@ export const server = {
 	}),
 	removeImage: defineAction({
 		input: z.object({
-			objectKey: z.string(),
+			publicId: z.string(),
 		}),
-		handler: async ({ objectKey }) => {
-			await deleteImage(objectKey);
+		handler: async ({ publicId }) => {
+			await cloudinary.uploader.destroy(publicId, {
+				invalidate: true,
+			});
 		},
 	}),
 	batchRemoveImages: defineAction({
 		input: z.object({
-			objectKeys: z.string().array(),
+			publicIds: z.string().array(),
 		}),
-		handler: async ({ objectKeys }) => {
-			await batchDeleteImages(objectKeys);
+		handler: async ({ publicIds }) => {
+			await cloudinary.api.delete_resources(publicIds);
 		},
 	}),
 	saveRotatedImage: defineAction({
 		input: z.object({
-			objectKey: z.string(),
-			degrees: z.number(),
+			publicId: z.string(),
+			angle: z.number(),
 		}),
-		handler: async ({ objectKey, degrees }) => {
-			const bytes = await downloadImage(objectKey);
-			if (!bytes)
-				throw new ActionError({
-					code: 'INTERNAL_SERVER_ERROR',
-					message: `Failed to download ${objectKey}`,
-				});
-
-			const rotatedBuffer = await sharp(bytes).rotate(degrees).toBuffer();
-
-			await replaceImage(objectKey, rotatedBuffer);
+		handler: ({ publicId, angle }) => {
+			cloudinary.image(publicId, {
+				angle,
+			});
 		},
 	}),
 };

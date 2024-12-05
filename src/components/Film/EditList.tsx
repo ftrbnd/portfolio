@@ -3,27 +3,27 @@ import EditImage from './EditImage';
 import { actions } from 'astro:actions';
 import { navigate } from 'astro:transitions/client';
 import toast from 'solid-toast';
+import type { PhotoCollectionEntry } from '../../content.config';
 
 interface Props {
-	urls: string[];
+	photos: PhotoCollectionEntry[];
 	folder: string;
-	cdnUrl: string;
 }
 
 const EditList: Component<Props> = (props) => {
 	const [checkedImages, setCheckedImages] = createSignal<string[]>([]);
 	const amount = () => checkedImages().length;
 
-	const removeImage = async (key: string) => {
+	const removeImage = async (publicId: string) => {
 		'use server';
 		await toast.promise(
 			actions.removeImage({
-				objectKey: `${props.folder}/${key}`,
+				publicId,
 			}),
 			{
-				loading: `Removing ${key}...`,
-				success: () => <span>Removed {key}</span>,
-				error: <span>Failed to remove {key}</span>,
+				loading: `Removing ${publicId}...`,
+				success: () => <span>Removed {publicId}</span>,
+				error: <span>Failed to remove {publicId}</span>,
 			}
 		);
 
@@ -35,7 +35,7 @@ const EditList: Component<Props> = (props) => {
 
 		await toast.promise(
 			actions.batchRemoveImages({
-				objectKeys: checkedImages(),
+				publicIds: checkedImages(),
 			}),
 			{
 				loading: `Removing ${amount()} photos...`,
@@ -47,31 +47,30 @@ const EditList: Component<Props> = (props) => {
 		await navigate(`/film/${props.folder}/edit`);
 	};
 
-	const saveRotation = async (imageUrl: string, degrees: number) => {
+	const saveRotation = async (publicId: string, angle: number) => {
 		'use server';
-		const imageName = imageUrl.split('/').at(-1);
 
 		await toast.promise(
 			actions.saveRotatedImage({
-				objectKey: `${props.folder}/${imageName}`,
-				degrees,
+				publicId,
+				angle,
 			}),
 			{
-				loading: `Rotating ${imageName}...`,
-				success: () => <span>Successfully rotated {imageName}!</span>,
-				error: <span>Failed to rotate {imageName}</span>,
+				loading: `Rotating ${publicId}...`,
+				success: () => <span>Successfully rotated {publicId}!</span>,
+				error: <span>Failed to rotate {publicId}</span>,
 			}
 		);
 
 		await navigate(`/film/${props.folder}/edit`);
 	};
 
-	const updateCheckedImages = (imageUrl: string) => {
+	const updateCheckedImages = (publicId: string) => {
 		setCheckedImages((prev) => {
-			if (prev.includes(imageUrl)) {
-				return prev.filter((url) => url !== imageUrl);
+			if (prev.includes(publicId)) {
+				return prev.filter((id) => id !== publicId);
 			}
-			return prev.concat(imageUrl);
+			return prev.concat(publicId);
 		});
 	};
 
@@ -91,15 +90,14 @@ const EditList: Component<Props> = (props) => {
 					</button>
 				</div>
 			</Show>
-			<For each={props.urls}>
-				{(url) => (
+			<For each={props.photos}>
+				{(photo) => (
 					<EditImage
-						src={url}
-						folder={props.folder}
-						removeImage={() => removeImage(url)}
+						photo={photo}
+						removeImage={() => removeImage(photo.data.public_id)}
 						saveRotation={saveRotation}
-						isChecked={checkedImages().includes(url)}
-						onCheck={() => updateCheckedImages(url)}
+						isChecked={checkedImages().includes(photo.data.public_id)}
+						onCheck={() => updateCheckedImages(photo.data.public_id)}
 					/>
 				)}
 			</For>

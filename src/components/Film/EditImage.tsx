@@ -1,29 +1,32 @@
 import { createSignal, Show, type Component } from 'solid-js';
 import Image from './Image';
+import type { PhotoCollectionEntry } from '../../content.config';
 
 interface Props {
-	src: string;
-	folder: string;
+	photo: PhotoCollectionEntry;
 	removeImage: () => void;
-	saveRotation: (url: string, deg: number) => void;
+	saveRotation: (publicId: string, angle: number) => void;
 	onCheck: () => void;
 	isChecked: boolean;
 }
 
 const EditImage: Component<Props> = (props) => {
-	const imageName = props.src.split('/').at(-1);
 	const [rotation, setRotation] = createSignal(0);
 	const isOriginalRotation = () => rotation() % -360 === 0;
 
 	const revealModal = () => {
 		(
-			document.getElementById(`delete_modal_${imageName}`) as HTMLDialogElement
+			document.getElementById(
+				`delete_modal_${props.photo.data.public_id}`
+			) as HTMLDialogElement
 		)?.showModal();
 	};
 
 	const hideModal = () => {
 		(
-			document.getElementById(`delete_modal_${imageName}`) as HTMLDialogElement
+			document.getElementById(
+				`delete_modal_${props.photo.data.public_id}`
+			) as HTMLDialogElement
 		)?.close();
 	};
 
@@ -33,7 +36,7 @@ const EditImage: Component<Props> = (props) => {
 				props.isChecked ? 'bg-slate-300' : 'bg-slate-200'
 			} rounded p-4 overflow-hidden`}>
 			<Image
-				src={props.src}
+				src={props.photo.data.secure_url}
 				rotation={rotation()}
 				rounded
 			/>
@@ -44,7 +47,9 @@ const EditImage: Component<Props> = (props) => {
 					class='checkbox checkbox-primary'
 					onchange={props.onCheck}
 				/>
-				<p class={props.isChecked ? 'font-bold' : ''}>{imageName}</p>
+				<p class={props.isChecked ? 'font-bold' : ''}>
+					{props.photo.data.public_id}
+				</p>
 			</div>
 			<div class='flex justify-center gap-2 items-center w-full'>
 				<div class='flex-1 flex gap-1'>
@@ -68,7 +73,9 @@ const EditImage: Component<Props> = (props) => {
 							data-tip='Save'>
 							<button
 								disabled={isOriginalRotation()}
-								onClick={() => props.saveRotation(props.src, rotation())}
+								onClick={() =>
+									props.saveRotation(props.photo.data.public_id, rotation())
+								}
 								class='btn btn-accent btn-sm sm:btn-md w-full'>
 								<svg
 									class='size-3 sm:size-4'
@@ -94,10 +101,12 @@ const EditImage: Component<Props> = (props) => {
 						</svg>
 					</button>
 					<dialog
-						id={`delete_modal_${imageName}`}
+						id={`delete_modal_${props.photo.data.public_id}`}
 						class='modal modal-bottom sm:modal-middle'>
 						<div class='modal-box text-zinc-100'>
-							<h3 class='font-bold text-lg'>Delete {imageName}?</h3>
+							<h3 class='font-bold text-lg'>
+								Delete {props.photo.data.public_id}?
+							</h3>
 							<p class='py-4'>
 								Confirm to remove the image from the collection.
 							</p>

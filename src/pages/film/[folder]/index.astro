@@ -10,10 +10,10 @@ import { CldImage } from 'astro-cloudinary';
 
 const { folder } = Astro.params;
 
-const photos = await getCollection(
+const photos = (await getCollection(
 	'photos',
 	(photo) => (photo as PhotoCollectionEntry).data.asset_folder === folder
-);
+)) as PhotoCollectionEntry[];
 
 const session = await auth.api.getSession({
 	headers: Astro.request.headers,
