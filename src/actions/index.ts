@@ -1,8 +1,9 @@
-import { defineAction } from 'astro:actions';
+import { ActionError, defineAction } from 'astro:actions';
 import { z } from 'astro:content';
 import { fetchCurrentlyPlaying } from '../services/last-fm';
 import { v2 as cloudinary } from 'cloudinary';
 import { getSecret } from 'astro:env/server';
+import { fetchRepository } from '../services/github';
 
 cloudinary.config({
 	cloud_name: getSecret('PUBLIC_CLOUDINARY_CLOUD_NAME'),
@@ -14,6 +15,14 @@ export const server = {
 	getCurrentlyPlaying: defineAction({
 		handler: async () => {
 			return fetchCurrentlyPlaying();
+		},
+	}),
+	getRepository: defineAction({
+		input: z.object({
+			name: z.string(),
+		}),
+		handler: async ({ name }) => {
+			return fetchRepository(name);
 		},
 	}),
 	removeImage: defineAction({

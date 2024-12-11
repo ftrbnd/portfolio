@@ -1,6 +1,7 @@
 ---
+import { username } from '../../services/github';
 import { USERNAME } from '../../services/last-fm';
-import { author, email } from '../../utils/constants';
+import { author, email } from '../../data/constants';
 import CurrentlyListening from './CurrentlyListening.astro';
 import Menu from './Menu.astro';
 
@@ -54,22 +55,22 @@ const lastNameLetter = author.split(' ')[1][0];
 
 	<div class='gap-1 navbar-end'>
 		<CurrentlyListening server:defer>
-			<div slot='fallback'>
-				<div class='card bg-base-100 image-full'>
-					<div class='card-body flex items-center justify-center py-0'>
-						<a
-							href={`https://last.fm/user/${USERNAME}`}
-							target='_blank'
-							class='flex flex-col sm:flex-row gap-2 items-center justify-center text-center'>
-							<i class={`fa-solid fa-record-vinyl fa-xl`}></i>
-							<div class='hidden sm:flex flex-col'>
-								<h2 class='card-title hidden sm:block text-start'>
-									Currently listening to...
-								</h2>
-								<p class='hidden lg:block text-start'>probably The Marías</p>
-							</div>
-						</a>
-					</div>
+			<div
+				slot='fallback'
+				class='card bg-base-100 image-full'>
+				<div class='card-body flex items-center justify-center py-0'>
+					<a
+						href={`https://last.fm/user/${USERNAME}`}
+						target='_blank'
+						class='flex flex-col sm:flex-row gap-2 items-center justify-center text-center'>
+						<i class={`fa-solid fa-record-vinyl fa-xl`}></i>
+						<div class='hidden sm:flex flex-col'>
+							<h2 class='card-title hidden sm:block text-start'>
+								Currently listening to...
+							</h2>
+							<p class='hidden lg:block text-start'>probably The Marías</p>
+						</div>
+					</a>
 				</div>
 			</div>
 		</CurrentlyListening>
@@ -94,7 +95,7 @@ const lastNameLetter = author.split(' ')[1][0];
 		<a
 			target='_blank'
 			class='btn btn-ghost'
-			href='https://github.com/ftrbnd'>
+			href={`https://github.com/${username}`}>
 			<svg
 				class='w-6 h-6'
 				fill='currentColor'

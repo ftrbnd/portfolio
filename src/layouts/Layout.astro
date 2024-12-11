@@ -1,8 +1,8 @@
 ---
 import Navbar from '../components/Navbar/index.astro';
 import Footer from '../components/Footer.astro';
-import { author } from '../utils/constants';
-import { ViewTransitions } from 'astro:transitions';
+import { author } from '../data/constants';
+import { ClientRouter } from 'astro:transitions';
 ---
 
 <!doctype html>
@@ -33,7 +33,7 @@ import { ViewTransitions } from 'astro:transitions';
 			src='https://kit.fontawesome.com/4afe62f7ed.js'
 			crossorigin='anonymous'
 		></script>
-		<ViewTransitions />
+		<ClientRouter />
 	</head>
 	<body class='flex flex-col items-center bg-base-200'>
 		<Navbar />
