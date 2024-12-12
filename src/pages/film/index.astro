@@ -1,39 +1,38 @@
 ---
-import Auth from '../../components/Auth';
 import Gallery from '../../components/Film/Gallery.astro';
-import FilmHeaderLayout from '../../layouts/FilmHeaderLayout.astro';
-import FilmBodyLayout from '../../layouts/FilmBodyLayout.astro';
 import FilmLayout from '../../layouts/FilmLayout.astro';
-import Layout from '../../layouts/Layout.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { username } from '../../services/github';
+
+export const prerender = false;
+Astro.response.headers.set(
+	'Cache-Control',
+	'public, max-age=3600, must-revalidate'
+);
 ---
 
-<Layout>
-	<FilmHeaderLayout showHeader>
-		<Auth client:load />
-	</FilmHeaderLayout>
+<BaseLayout>
 	<FilmLayout>
-		<FilmBodyLayout>
-			<h1
-				slot='header-content'
-				class='text-4xl font-serif mb-2 lowercase'>
-				shot on film
-			</h1>
-			<h2
-				slot='header-content'
-				class='text-xl text-muted-foreground'>
-				[ Ricoh TF-500 ]
-			</h2>
-			<h3
-				slot='header-content'
-				class='text-sm text-muted-foreground'>
-				Check out{' '}<a
-					href='https://github.com/ftrbnd/film-sync'
-					target='_blank'
-					class='link font-bold'
-					>Film Sync!</a
-				>
-			</h3>
-			<Gallery />
-		</FilmBodyLayout>
+		<h1
+			slot='header-content'
+			class='text-4xl font-serif mb-2 lowercase'>
+			shot on film
+		</h1>
+		<h2
+			slot='header-content'
+			class='text-xl text-muted-foreground'>
+			[ Ricoh TF-500 ]
+		</h2>
+		<h3
+			slot='header-content'
+			class='text-sm text-muted-foreground'>
+			Check out{' '}<a
+				href={`https://github.com/${username}/film-sync`}
+				target='_blank'
+				class='link font-bold'
+				>Film Sync!</a
+			>
+		</h3>
+		<Gallery />
 	</FilmLayout>
-</Layout>
+</BaseLayout>

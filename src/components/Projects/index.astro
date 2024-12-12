@@ -1,7 +1,10 @@
 ---
-import { favorites } from '../../utils/constants';
-import Project from './Project';
+import { getCollection } from 'astro:content';
 import * as Header from './Header.md';
+import Project from './Project.astro';
+import { username } from '../../services/github';
+
+const projects = await getCollection('projects');
 ---
 
 <div class='py-8'>
@@ -12,11 +15,47 @@ import * as Header from './Header.md';
 	<div
 		class='flex flex-col items-stretch justify-center gap-3 md:grid md:grid-cols-2 xl:grid-cols-3'>
 		{
-			favorites.map((project) => (
+			projects.map((project) => (
 				<Project
-					{...project}
-					client:idle
-				/>
+					{project}
+					server:defer>
+					<div
+						slot='fallback'
+						class='card w-full flex-1 bg-base-100 shadow-xl image-full'>
+						<figure>
+							<img
+								src={project.data.screenshots[0]}
+								alt='Screenshot'
+								class='max-h-72 min-h-72'
+							/>
+						</figure>
+						<div class='card-body'>
+							<h2 class='card-title'>{project.data.project_name}</h2>
+							<p>Connecting to GitHub...</p>
+							<div class='card-actions justify-end'>
+								<a
+									class='btn btn-secondary'
+									href={`https://github.com/${username}/${project.data.repository_name}`}
+									target='_blank'>
+									<svg
+										class='size-6'
+										fill='currentColor'
+										xmlns='http://www.w3.org/2000/svg'
+										viewBox='0 0 640 512'>
+										<path d='M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3L562.7 256l-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z' />
+									</svg>
+									Repo
+								</a>
+								<a
+									class='btn btn-primary btn-disabled'
+									target='_blank'>
+									<span class='loading loading-spinner' />
+									Visit
+								</a>
+							</div>
+						</div>
+					</div>
+				</Project>
 			))
 		}
 	</div>
@@ -25,7 +64,7 @@ import * as Header from './Header.md';
 	<p>
 		See more on my <a
 			class='link'
-			href='https://github.com/ftrbnd'
+			href={`https://github.com/${username}`}
 			target='_blank'
 			>GitHub</a
 		>!

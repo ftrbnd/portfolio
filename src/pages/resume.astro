@@ -1,15 +1,18 @@
 ---
-import Project from '../components/Resume/Project.astro';
-import Layout from '../layouts/Layout.astro';
-import { favorites } from '../utils/constants';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { author, email } from '../data/constants';
+import { username } from '../services/github';
+
+const projects = await getCollection('projects');
 ---
 
-<Layout>
+<BaseLayout>
 	<div class='flex flex-col min-h-screen gap-4 p-8 md:p-16 max-w-5xl'>
 		<div class='flex flex-col gap-2'>
-			<h1 class='text-3xl font-bold text-center'>Giovanni Salas</h1>
+			<h1 class='text-3xl font-bold text-center'>{author}</h1>
 			<p class='text-center'>
-				https://github.com/ftrbnd | giosalas25@gmail.com
+				https://github.com/{username} | {email}
 			</p>
 		</div>
 
@@ -34,12 +37,16 @@ import { favorites } from '../utils/constants';
 			<h3 class='text-2xl font-bold'>Projects</h3>
 			<div class='my-2 divider'></div>
 			{
-				favorites.map((project) => (
-					<Project
-						title={project.project_name}
-						technologies={project.technologies}
-						points={project.points}
-					/>
+				projects.map((project) => (
+					<div class='my-4'>
+						<p class='font-bold'>{project.data.project_name}</p>
+						<p class='italic'>{project.data.technologies.join(', ')}</p>
+						<ul class='list-disc list-inside'>
+							{project.data.points.map((p) => (
+								<li class='list-item'>{p}</li>
+							))}
+						</ul>
+					</div>
 				))
 			}
 		</div>
@@ -97,4 +104,4 @@ import { favorites } from '../utils/constants';
 			</div>
 		</div>
 	</div>
-</Layout>
+</BaseLayout>
