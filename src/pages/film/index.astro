@@ -1,7 +1,5 @@
 ---
-import Auth from '../../components/Auth';
 import Gallery from '../../components/Film/Gallery.astro';
-import FilmHeaderLayout from '../../layouts/FilmHeaderLayout.astro';
 import FilmBodyLayout from '../../layouts/FilmBodyLayout.astro';
 import FilmLayout from '../../layouts/FilmLayout.astro';
 import Layout from '../../layouts/Layout.astro';
@@ -9,9 +7,6 @@ import { username } from '../../services/github';
 ---
 
 <Layout>
-	<FilmHeaderLayout showHeader>
-		<Auth client:load />
-	</FilmHeaderLayout>
 	<FilmLayout>
 		<FilmBodyLayout>
 			<h1

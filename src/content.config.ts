@@ -8,7 +8,7 @@ export const collections = {
 		loader: cldAssetsLoader(),
 	}),
 	projects: defineCollection({
-		loader: file('src/utils/projects.json'),
+		loader: file('src/data/projects.json'),
 		schema: z.object({
 			repository_name: z.string(),
 			project_name: z.string(),
