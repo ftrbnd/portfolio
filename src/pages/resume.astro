@@ -1,5 +1,5 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { author, email } from '../data/constants';
 import { username } from '../services/github';
@@ -7,7 +7,7 @@ import { username } from '../services/github';
 const projects = await getCollection('projects');
 ---
 
-<Layout>
+<BaseLayout>
 	<div class='flex flex-col min-h-screen gap-4 p-8 md:p-16 max-w-5xl'>
 		<div class='flex flex-col gap-2'>
 			<h1 class='text-3xl font-bold text-center'>{author}</h1>
@@ -104,4 +104,4 @@ const projects = await getCollection('projects');
 			</div>
 		</div>
 	</div>
-</Layout>
+</BaseLayout>

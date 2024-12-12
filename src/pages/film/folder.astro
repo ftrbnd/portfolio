@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FilmLayout from '../../layouts/FilmLayout.astro';
+import { getCollection } from 'astro:content';
+import type { PhotoCollectionEntry } from '../../content.config';
+import { CldImage } from 'astro-cloudinary';
+
+const { folder } = Astro.params;
+
+const photos = (await getCollection(
+	'photos',
+	(photo) => (photo as PhotoCollectionEntry).data.asset_folder === folder
+)) as PhotoCollectionEntry[];
+---
+
+<BaseLayout>
+	<FilmLayout>
+		<h1
+			slot='header-content'
+			class='text-4xl font-serif mb-2 lowercase'>
+			{folder}
+		</h1>
+		<a
+			slot='header-content'
+			href='/film'
+			class='link link-primary'
+			>back</a
+		>
+		<div
+			class='gap-4 md:gap-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 max-w-screen-2xl'>
+			{
+				photos.map((photo) => (
+					<CldImage
+						transition:persist={photo.data.public_id}
+						src={photo.data.public_id}
+						height={photo.data.height}
+						width={photo.data.width}
+					/>
+				))
+			}
+		</div>
+	</FilmLayout>
+</BaseLayout>

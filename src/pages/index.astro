@@ -1,11 +1,11 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import Projects from '../components/Projects/index.astro';
 import About from '../components/About/index.astro';
 ---
 
-<Layout>
+<BaseLayout>
 	<main
 		class='w-5/6 bg-base-200 md:max-w-[1536px] 2xl:grid 2xl:gap-x-16 2xl:grid-cols-3'>
 		<Hero />
@@ -14,4 +14,4 @@ import About from '../components/About/index.astro';
 			<Projects />
 		</div>
 	</main>
-</Layout>
+</BaseLayout>
