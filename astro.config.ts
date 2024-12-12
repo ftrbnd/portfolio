@@ -7,9 +7,5 @@ import netlify from '@astrojs/netlify';
 // https://astro.build/config
 export default defineConfig({
 	integrations: [tailwind(), solidJs()],
-	output: 'server',
 	adapter: netlify(),
-	image: {
-		domains: ['cloudfront.net'],
-	},
 });
