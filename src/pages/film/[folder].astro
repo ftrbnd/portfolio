@@ -8,14 +8,14 @@ import { CldImage } from 'astro-cloudinary';
 export const prerender = false;
 Astro.response.headers.set(
 	'Cache-Control',
-	'public, max-age=3600, must-revalidate'
+	'private, no-cache, no-store, must-revalidate'
 );
 
 const { folder } = Astro.params;
 
 const photos = (await getCollection(
 	'photos',
-	(photo) => (photo as PhotoCollectionEntry).data.asset_folder === folder
+	(photo: any) => (photo as PhotoCollectionEntry).data.asset_folder === folder
 )) as PhotoCollectionEntry[];
 ---
 

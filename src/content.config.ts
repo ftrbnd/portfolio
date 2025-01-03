@@ -5,7 +5,10 @@ import { file } from 'astro/loaders';
 
 export const collections = {
 	photos: defineCollection({
-		loader: cldAssetsLoader(),
+		loader: cldAssetsLoader({
+			limit: 500, // Increase if you have more images
+			resourceType: 'image',
+		}),
 	}),
 	projects: defineCollection({
 		loader: file('src/data/projects.json'),
