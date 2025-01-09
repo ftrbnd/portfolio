@@ -3,7 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import FilmLayout from '../../layouts/FilmLayout.astro';
 import { getCollection } from 'astro:content';
 import type { PhotoCollectionEntry } from '../../content.config';
-import { CldImage } from 'astro-cloudinary';
+import CloudinaryImage from '../../components/Film/CloudinaryImage.astro';
 
 export const prerender = false;
 Astro.response.headers.set(
@@ -34,16 +34,7 @@ const photos = (await getCollection(
 		>
 		<div
 			class='gap-4 md:gap-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 max-w-screen-2xl'>
-			{
-				photos.map((photo) => (
-					<CldImage
-						transition:persist={photo.data.public_id}
-						src={photo.data.public_id}
-						height={photo.data.height}
-						width={photo.data.width}
-					/>
-				))
-			}
+			{photos.map((photo) => <CloudinaryImage {photo} />)}
 		</div>
 	</FilmLayout>
 </BaseLayout>

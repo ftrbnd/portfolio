@@ -1,0 +1,20 @@
+---
+import { CldImage } from 'astro-cloudinary';
+import type { PhotoCollectionEntry } from '../../content.config';
+
+interface Props {
+	photo: PhotoCollectionEntry;
+}
+
+const { photo } = Astro.props;
+---
+
+<div class='w-full aspect-[3/2] overflow-hidden relative'>
+	<CldImage
+		class='w-full h-full object-contain absolute'
+		transition:persist={photo.data.public_id}
+		src={photo.data.public_id}
+		height={photo.data.height}
+		width={photo.data.width}
+	/>
+</div>
