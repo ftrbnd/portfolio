@@ -1,9 +1,9 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import FilmLayout from '../../layouts/FilmLayout.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import FilmLayout from '@layouts/FilmLayout.astro';
 import { getCollection } from 'astro:content';
-import type { PhotoCollectionEntry } from '../../content.config';
-import CloudinaryImage from '../../components/Film/CloudinaryImage.astro';
+import type { PhotoCollectionEntry } from '@/content.config';
+import CloudinaryImage from '@components/Film/CloudinaryImage.astro';
 
 export const prerender = false;
 Astro.response.headers.set(

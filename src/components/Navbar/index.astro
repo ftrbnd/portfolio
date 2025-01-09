@@ -1,9 +1,9 @@
 ---
-import { username } from '../../services/github';
-import { USERNAME } from '../../services/last-fm';
-import { author, email } from '../../data/constants';
-import CurrentlyListening from './CurrentlyListening.astro';
-import Menu from './Menu.astro';
+import { username } from '@services/github';
+import { USERNAME } from '@services/last-fm';
+import { author, email } from '@data/constants';
+import CurrentlyListening from '@components/Navbar/CurrentlyListening.astro';
+import Menu from '@components/Navbar/Menu.astro';
 
 const nickName = author.substring(0, 3);
 const lastNameLetter = author.split(' ')[1][0];

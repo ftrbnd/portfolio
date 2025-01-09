@@ -1,8 +1,8 @@
 ---
-import type { PhotoCollectionEntry } from '../../content.config';
-import EmptyAlert from './EmptyAlert.astro';
+import type { PhotoCollectionEntry } from '@/content.config';
 import { getCollection } from 'astro:content';
-import FolderPreview from './FolderPreview.astro';
+import EmptyAlert from '@components/Film/EmptyAlert.astro';
+import FolderPreview from '@components/Film/FolderPreview.astro';
 
 const photos = (await getCollection('photos')) as PhotoCollectionEntry[];
 const folders = [...new Set(photos.map((photo) => photo.data.asset_folder))];

@@ -1,8 +1,8 @@
 ---
-import Gallery from '../../components/Film/Gallery.astro';
-import FilmLayout from '../../layouts/FilmLayout.astro';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import { username } from '../../services/github';
+import Gallery from '@components/Film/Gallery.astro';
+import FilmLayout from '@layouts/FilmLayout.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { username } from '@services/github';
 
 export const prerender = false;
 Astro.response.headers.set(

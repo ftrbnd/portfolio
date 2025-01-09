@@ -1,7 +1,7 @@
 import { defineAction } from 'astro:actions';
 import { z } from 'astro:schema';
-import { fetchCurrentlyPlaying } from '../services/last-fm';
-import { fetchRepository } from '../services/github';
+import { fetchCurrentlyPlaying } from '@services/last-fm';
+import { fetchRepository } from '@services/github';
 
 export const server = {
 	getCurrentlyPlaying: defineAction({

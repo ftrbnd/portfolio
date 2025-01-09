@@ -1,8 +1,8 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import { author, email } from '../data/constants';
-import { username } from '../services/github';
+import { author, email } from '@data/constants';
+import { username } from '@services/github';
 
 const projects = await getCollection('projects');
 ---

@@ -1,8 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
-import * as Header from './Header.md';
-import Project from './Project.astro';
-import { username } from '../../services/github';
+import * as Header from '@components/Projects/Header.md';
+import Project from '@components/Projects/Project.astro';
+import { username } from '@services/github';
 
 const projects = await getCollection('projects');
 ---

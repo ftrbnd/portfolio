@@ -1,6 +1,6 @@
 ---
+import { USERNAME } from '@/services/last-fm';
 import { actions } from 'astro:actions';
-import { USERNAME } from '../../services/last-fm';
 
 const { data, error } = await Astro.callAction(actions.getCurrentlyPlaying, {});
 const derivedClass =
