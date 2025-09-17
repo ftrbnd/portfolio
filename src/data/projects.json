@@ -1,6 +1,39 @@
 [
 	{
-		"id": "0",
+		"id": "6",
+		"repository_name": "heardle-club",
+		"project_name": "Heardle Club",
+		"screenshots": [],
+		"technologies": [
+			"Next.js",
+			"ElysiaJS",
+			"NeonDb",
+			"Redis",
+			"Supabase",
+			"TypeScript",
+			"TailwindCSS"
+		],
+		"points": ["Work in progress..."]
+	},
+	{
+		"id": "5",
+		"repository_name": "myrunningplaylist",
+		"project_name": "My Running Playlist",
+		"screenshots": [
+			"https://i.imgur.com/NA9qaPn.png",
+			"https://i.imgur.com/w930esM.png",
+			"https://i.imgur.com/hE9Jloj.png",
+			"https://i.imgur.com/cPGl9LT.png",
+			"https://i.imgur.com/6Z9YDs8.png"
+		],
+		"technologies": ["TypeScript", "Next.js", "NeonDb", "TailwindCSS"],
+		"points": [
+			"Created a Spotify playlist editor to synchronize timestamps to a goal race time (Marathon, 5K, etc)",
+			"Implemented a custom auth solution with Spotify for a faster experience"
+		]
+	},
+	{
+		"id": "4",
 		"repository_name": "film-sync",
 		"project_name": "Film Sync",
 		"screenshots": [
@@ -21,7 +54,7 @@
 		]
 	},
 	{
-		"id": "1",
+		"id": "3",
 		"repository_name": "apt-manager",
 		"project_name": "Apt Manager",
 		"screenshots": [
@@ -57,7 +90,7 @@
 		]
 	},
 	{
-		"id": "3",
+		"id": "1",
 		"repository_name": "eden-heardle",
 		"project_name": "EDEN Heardle",
 		"screenshots": [
@@ -79,7 +112,7 @@
 		]
 	},
 	{
-		"id": "4",
+		"id": "0",
 		"repository_name": "futurebound-bot",
 		"project_name": "Futurebound Bot",
 		"screenshots": [
